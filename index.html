@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr" data-darkreader-mode="dynamic" data-darkreader-scheme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>PU map tool</title>
+
+		<link rel="stylesheet" href="style.css">
+    <link rel="icon" href="ressources/Logo_Ball_UNITE.png">
+</head>
+<body>
+
+  <!-- MAP BACKGROUND-->
+	<div>
+		<img id="map" class="map" src="ressources/map/map.png">
+	</div>
+
+	<!-- BUTTONS -->
+	<div class="btnholder">
+		<!-- time ? (only visual) -->
+		<div onclick="handleZoomMap()" class="zoombtn">BACK</div>
+		<div onclick="handleZoomMap(this, 'top')" class="zoombtn">TOP</div>
+		<div onclick="handleZoomMap(this, 'mid')" class="zoombtn">MID</div>
+		<div onclick="handleZoomMap(this, 'bot')" class="zoombtn">BOT</div>
+		<!-- reset ? -->
+		<!-- backward ? -->
+		<!-- forward ? -->
+	</div>
+
+	<!-- AUTHOR -->
+	<div onclick="copyDiscordUsername()" onmouseout="onMouseOutTooltip('discord-tooltip')" class="name tooltip">
+		<span>Discord: </span><span id="discord-username">Captain Baguette#6805</span>
+    <span id="discord-tooltip" class="tooltiptext hide"></span>
+	</div>
+
+
+
+  <!-- PURPLE SIDE -->
+	<div id="left-menu" class="menu left-menu">
+		<div id="purple-picks" class="draggable-container">
+			<!-- ATTACKERS -->
+			<div id="purple-attackers" class="draggable-items purple-side">
+				<!-- VENUSAUR -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-venusaur.png');"></div>
+				<!-- PIKACHU -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-pikachu.png');"></div>
+				<!-- ALOLAN NINTALES -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-alolan-ninetales.png');"></div>
+				<!-- GARDEVOIR -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-gardevoir.png');"></div>
+				<!-- GRENINJA -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-greninja.png');"></div>
+				<!-- SYLVEON -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-sylveon.png');"></div>
+				<!-- DECIDUEYE -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-decidueye.png');"></div>
+				<!-- CINDERACE -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-cinderace.png');"></div>
+				<!-- CRAMORANT -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-cramorant.png');"></div>
+				<!-- DURALUGON -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-duraludon.png');"></div>
+				<!-- ESPEON -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-espeon.png');"></div>
+				<!-- DELPHOX -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-delphox.png');"></div>
+				<!-- GLACEON -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-glaceon.png');"></div>
+				<!-- MEW -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-mew.png');"></div>
+				<!-- DRAGAPULT -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-dragapult.png');"></div>
+				<!-- CHANDELURE -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-chandelure.png');"></div>
+			</div>
+			<!-- DEFENDERS -->
+			<div id="purple-defenders" class="draggable-items purple-side">
+				<!-- BLASTOISE -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-blastoise.png');"></div>
+				<!-- SLOWBRO -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-slowbro.png');"></div>
+				<!-- SNORLAX -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-snorlax.png');"></div>
+				<!-- MAMOSWINE -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-mamoswine.png');"></div>
+				<!-- CRUSTLE -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-crustle.png');"></div>
+				<!-- TREVENANT -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-trevenant.png');"></div>
+				<!-- GREEDENT -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-greedent.png');"></div>
+				<!-- GOODRA -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-goodra.png');"></div>
+				<!-- LAPRAS -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-lapras.png');"></div>
+				<!-- UMBREON -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-umbreon.png');"></div>
+			</div>
+			<!-- SUPPORTERS -->
+			<div id="purple-supporters" class="draggable-items purple-side">
+				<!-- WIGGLYTUFF -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-wigglytuff.png');"></div>
+				<!-- BLISSEY -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-blissey.png');"></div>
+				<!-- MR MIME -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-mr-mime.png');"></div>
+				<!-- HOOPA -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-hoopa.png');"></div>
+				<!-- ELDEGOSS -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-eldegoss.png');"></div>
+				<!-- CLEFABLE -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-clefable.png');"></div>
+				<!-- SABLEYE -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-sableye.png');"></div>
+				<!-- COMFEY -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-comfey.png');"></div>
+			</div>
+			<!-- ALL ROUNDERS -->
+			<div id="purple-allrounders" class="draggable-items purple-side">
+				<!-- CHARIZARD -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-charizard.png');"></div>
+				<!-- MACHAMP -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-machamp.png');"></div>
+				<!-- DRAGONITE -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-dragonite.png');"></div>
+				<!-- GARCHOMP -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-garchomp.png');"></div>
+				<!-- LUCARIO -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-lucario.png');"></div>
+				<!-- AEGISLASH -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-aegislash.png');"></div>
+				<!-- TSAREENA -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-tsareena.png');"></div>
+				<!-- AZUMARILL -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-azumarill.png');"></div>
+				<!-- BUZZWOLE -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-buzzwole.png');"></div>
+				<!-- TYRANITAR -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-tyranitar.png');"></div>
+				<!-- SCIZOR -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-scizor.png');"></div>
+				<!-- SCYTHER -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-scyther.png');"></div>
+				<!-- URSHIFU SINGLE STRIKE -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-urshifu_single_strike.png');"></div>
+				<!-- URSHIFU RAPID STRIKE -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-urshifu_rapid_strike.png');"></div>
+				<!-- ZACIAN -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-zacian.png');"></div>
+			</div>
+			<!-- SPEEDSTERS -->
+			<div id="purple-speedsters" class="draggable-items purple-side">
+				<!-- GENGAR -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-gengar.png');"></div>
+				<!-- ABSOL -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-absol.png');"></div>
+				<!-- TALONFLAME -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-talonflame.png');"></div>
+				<!-- ZERAORA -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-zeraora.png');"></div>
+				<!-- DODRIO -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-dodrio.png');"></div>
+				<!-- ZOROARK -->
+				<div class="draggable purple-mon" style="background-image: url('ressources/pokemon/roster-zoroark.png');"></div>
+			</div>
+		</div>
+		<span onclick="toggleMenu(this, 'purple-picks')" class="purple-side">◄</span>
+	</div>
+
+	<!-- NEUTRAL POKEMON -->
+	<div id="bottom-left-menu" class="menu bottom-left-menu">
+		<div id="neutral-picks" class="draggable-container draggable-items neutral-side">
+			<!-- REGIELEKI -->
+			<div class="draggable neutral-mon" style="background-image: url('ressources/pokemon/roster-regieleki.png');"></div>
+			<!-- REGICE -->
+			<div class="draggable neutral-mon" style="background-image: url('ressources/pokemon/roster-regice.png');"></div>
+			<!-- REGIROCK -->
+			<div class="draggable neutral-mon" style="background-image: url('ressources/pokemon/roster-regirock.png');"></div>
+			<!-- REGISTEEL -->
+			<div class="draggable neutral-mon" style="background-image: url('ressources/pokemon/roster-registeel.png');"></div>
+			<!-- RAYQUAZA -->
+			<div class="draggable neutral-mon" style="background-image: url('ressources/pokemon/roster-rayquaza.png');"></div>
+			<!-- ALTARIA -->
+			<div class="draggable neutral-mon" style="background-image: url('ressources/pokemon/roster-altaria.png');"></div>
+			<!-- ESCAVALIER -->
+			<div class="draggable neutral-mon" style="background-image: url('ressources/pokemon/roster-escavalier.png');"></div>
+			<!-- ACCELGOR -->
+			<div class="draggable neutral-mon" style="background-image: url('ressources/pokemon/roster-accelgor.png');"></div>
+		</div>
+		<span onclick="toggleMenu(this, 'neutral-picks')" class="neutral-side">▼</span>
+	</div>
+	
+  <!-- ORANGE SIDE -->
+	<div id="right-menu" class="menu right-menu">
+		<div id="orange-picks" class="draggable-container"></div>
+		<span onclick="toggleMenu(this, 'orange-picks')" class="orange-side">►</span>
+	</div>
+
+	<!-- BASES -->
+	<div id="bottom-right-menu" class="menu bottom-right-menu">
+		<div id="base-picks" class="draggable-container draggable-items base-side">
+			<div class="draggable base-mon" style="background-image: url('ressources/icons/roster-blue_base.png');"></div>
+			<div class="draggable base-mon" style="background-image: url('ressources/icons/roster-red_base.png');"></div>
+		</div>
+		<span onclick="toggleMenu(this, 'base-picks')" class="base-side">▼</span>
+	</div>
+
+	<script type="text/javascript" src="script.js"></script>
+</body>
+
+</html>

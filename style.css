@@ -1,0 +1,287 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+body {
+	background: #333;
+	overflow: hidden;
+	user-select: none;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+/* Other */
+.hide {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.purple-side {
+  background: #5a4aade1;
+}
+
+.orange-side {
+  background: #76453cdc;
+}
+
+.neutral-side {
+  background: #7c7776d7;
+}
+
+.base-side {
+  background: #7c7776de;
+}
+
+.purple-mon {
+  border: 2px solid #8473fd;
+  border-radius: 50%;
+  background-color: #594ba8ef;
+  -webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+}
+
+.orange-mon {
+  border: 2px solid #e4825c;
+  border-radius: 50%;
+  background-color: #ca6e4a4d;
+}
+
+.neutral-mon {
+  border: 2px solid #1e1e20;
+  border-radius: 50%;
+  background-color: #1b17316e;
+}
+
+.base-mon {
+  border: 2px solid #1e1e20;
+  border-radius: 50%;
+  background-color: #1b173144;
+}
+
+/* Map */
+.map {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  margin: auto;
+	width: 100%;
+	position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Zoom */
+.zoom-top {
+  transform: scale(2.5) translate(-20%, 5%);
+}
+.zoom-mid {
+  transform: scale(2.5) translate(-20%, -20%);
+}
+.zoom-bot {
+  transform: scale(2.5) translate(-20%, -40%);
+}
+
+
+/* Button on top */
+.btnholder {
+  background: #0000008a;
+	border-radius: 0 0 25% 25%;
+  padding: 4px;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	translate: -50%;
+	display: flex;
+}
+
+.btnholder>.zoombtn {
+  flex-grow: 1;
+  text-align: center;
+  vertical-align: middle;
+  color: #bababa;
+  font-size: 1em;
+  padding: 5px;
+	transition: text-shadow 0.3s, opacity 0.2s;
+}
+
+.zoombtn:hover {
+	color: white;
+  cursor: pointer;
+}
+
+.zoombtn.zoomin {
+  color: white;
+}
+
+/* Name on bottom */
+.name {
+  color: #bababa;
+  background: #000000a4;
+  font-size: 1em;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+	translate: -50%;
+  padding: 5px;
+}
+
+/* Tooltips */
+.tooltip .tooltiptext {
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Menus */
+.menu {
+  position: fixed;
+  width: 20vw;
+  transition: transform .5s;
+}
+
+.left-menu {
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.right-menu {
+  height: 100vh;
+  top: 0;
+  right: 0;
+}
+
+.bottom-left-menu {
+  height: 20vh;
+  bottom: 0;
+  left: 21vw;
+}
+
+.bottom-right-menu {
+  height: 20vh;
+  bottom: 0;
+  right: 21vw;
+}
+
+.left-menu .draggable-items {
+  border-radius: 0px 10px 10px 0px;
+}
+
+.right-menu .draggable-items {
+  flex-direction: row-reverse;
+  border-radius: 10px 0px 0px 10px;
+}
+
+.bottom-left-menu .draggable-items {
+  justify-content: space-around;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.bottom-right-menu .draggable-items {
+  justify-content: space-around;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.menu span {
+  position: absolute;
+  padding: 10px;
+}
+
+.menu span:hover {
+  color: #fff;
+  cursor: pointer;
+}
+
+.left-menu span {
+  top: 0;
+  right: 0;
+  transform: translate(100%, 50%);
+  border-radius: 0px 10px 10px 0px;
+}
+
+.right-menu span {
+  top: 0;
+  left: 0;
+  transform: translate(-100%, 50%);
+  border-radius: 10px 0px 0px 10px;
+}
+
+.bottom-left-menu span {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  border-radius: 10px 10px 0px 0px;
+}
+
+.bottom-right-menu span {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  border-radius: 10px 10px 0px 0px;
+}
+
+.menu.closed {
+  transition: transform .5s;
+}
+
+.left-menu.closed {
+  transform: translateX(-100%);
+}
+
+.right-menu.closed {
+  transform: translateX(100%);
+}
+
+.bottom-left-menu.closed {
+  transform: translateY(100%);
+}
+
+.bottom-right-menu.closed {
+  transform: translateY(100%);
+}
+
+/* Draggables */
+.draggable-container {
+  height: 100%;
+  display: grid;
+}
+
+.draggable-items {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 2px solid #2d2d2d7a;
+  padding: 5px;
+  align-items: center;
+  gap: 2px;
+}
+
+.draggable {
+  height: 6vh;
+  width: 6vh;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
