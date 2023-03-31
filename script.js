@@ -44,6 +44,30 @@ function setDraggableElements() {
   const neutralDragElts = ElNeutralPicks.getElementsByClassName("draggable");
   const baseDragElts = ElBasePicks.getElementsByClassName("draggable");
 
+  for (const el of purpleDragElts) {
+    el.id = `dragId-${INC_DRAGID}`;
+    el.setAttribute("draggable", "true");
+    el.addEventListener("dragstart", (event) => onDragStart(event));
+
+    INC_DRAGID++;
+  }
+
+  for (const el of orangeDragElts) {
+    el.id = `dragId-${INC_DRAGID}`;
+    el.setAttribute("draggable", "true");
+    el.addEventListener("dragstart", (event) => onDragStart(event));
+
+    INC_DRAGID++;
+  }
+
+  for (const el of neutralDragElts) {
+    el.id = `dragId-${INC_DRAGID}`;
+    el.setAttribute("draggable", "true");
+    el.addEventListener("dragstart", (event) => onDragStart(event, true));
+
+    INC_DRAGID++;
+  }
+
   for (const el of baseDragElts) {
     el.id = `dragId-${INC_DRAGID}`;
     el.setAttribute("draggable", "true");
@@ -75,9 +99,9 @@ function onDrop(e) {
     element: undefined, 
     parent: undefined, 
     pointX: 0,
-    pointY: 0
+    pointY: 0,
+    clone: dragData.clone
   };
-  console.log(e)
 
   if (!dragData.dropped) {
     if (dragData.clone) {
@@ -87,8 +111,6 @@ function onDrop(e) {
       INC_DRAGID++;
     }
   
-    ElMap.parentElement.appendChild(elem);
-  
     marker.element = elem; 
     marker.parent = elem.parentElement; 
     marker.pointX = e.offsetX;
@@ -96,11 +118,15 @@ function onDrop(e) {
     
     Markers.push(marker);
 
-    if (!dragData.clone) elem.remove();
+    if (!dragData.clone) {
+      elem.remove();
+
+    }
   
     elem.style.position = "absolute";
     const index = Markers.length-1;
     elem.ondragstart = (event) => onMapDragStart(event, true, index);
+    ElMap.parentElement.appendChild(elem);
     setDragElemTransform(marker);
   } else {
     console.log(dragData.markerId)
