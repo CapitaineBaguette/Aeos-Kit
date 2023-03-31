@@ -26,11 +26,15 @@ body {
 }
 
 .neutral-side {
-  background: #7c7776d7;
+  background: #7c7776de;
 }
 
 .base-side {
   background: #7c7776de;
+}
+
+.item-side {
+  background: #7c7776de
 }
 
 .purple-mon {
@@ -56,7 +60,19 @@ body {
 .base-mon {
   border: 2px solid #1e1e20;
   border-radius: 50%;
-  background-color: #1b173144;
+  background-color: #1b17316e;
+}
+
+.bitem-mon {
+  border: 2px solid #1e1e20;
+  border-radius: 50%;
+  background-color: #1b17316e;
+}
+
+.hitem-mon {
+  border: 2px solid #1e1e20;
+  border-radius: 50%;
+  background-color: #1b17316e;
 }
 
 /* Map */
@@ -172,6 +188,13 @@ body {
   right: 21vw;
 }
 
+.bottom-middle-menu {
+  height: 20vh;
+  bottom: 0;
+  left: 50vw;
+  transform: translateX(-50%);
+}
+
 .left-menu .draggable-items {
   border-radius: 0px 10px 10px 0px;
 }
@@ -189,6 +212,19 @@ body {
 .bottom-right-menu .draggable-items {
   justify-content: space-around;
   border-radius: 10px 10px 0px 0px;
+}
+
+.bottom-middle-menu .draggable-items {
+  flex-direction: row;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.bottom-middle-menu .draggable-container {
+  display: flex;
+}
+
+.bottom-middle-menu .draggable-items {
+  flex-direction: column;
 }
 
 .menu span {
@@ -271,4 +307,14 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
+}
+
+.draggable.bitem-mon {
+  height: 3.2vh;
+  width: 3.2vh;
+}
+
+.draggable.hitem-mon {
+  height: 3.2vh;
+  width: 3.2vh;
 }
