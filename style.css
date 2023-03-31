@@ -230,14 +230,11 @@ body {
 .bottom-middle-menu .draggable-items {
   flex-direction: row;
   border-radius: 10px 10px 0px 0px;
+  flex-direction: column;
 }
 
 .bottom-middle-menu .draggable-container {
   display: flex;
-}
-
-.bottom-middle-menu .draggable-items {
-  flex-direction: column;
 }
 
 .menu span {
