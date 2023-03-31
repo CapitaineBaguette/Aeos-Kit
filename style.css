@@ -70,6 +70,10 @@ body {
   transform: scale(1) translate(0px, 0px);
 }
 
+.dragged {
+  position: absolute;
+}
+
 
 /* Button on top */
 .btnholder {

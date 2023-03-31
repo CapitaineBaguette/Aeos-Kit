@@ -36,6 +36,8 @@ const ElBasePicks = document.getElementById("base-picks");
   copyPurpleToOrangePicks();
   addZoomEvents();
   setDraggableElements();
+
+  document.addEventListener("contextmenu", event => event.preventDefault());
 })();
 
 function setDraggableElements() {
@@ -48,7 +50,7 @@ function setDraggableElements() {
     el.id = `dragId-${INC_DRAGID}`;
     el.setAttribute("draggable", "true");
     el.addEventListener("dragstart", (event) => onDragStart(event));
-
+    
     INC_DRAGID++;
   }
 
@@ -102,7 +104,7 @@ function onDrop(e) {
     pointY: 0,
     clone: dragData.clone
   };
-
+  console.log(1, dragData, marker)
   if (!dragData.dropped) {
     if (dragData.clone) {
       elem = elem.cloneNode(true);
@@ -118,25 +120,41 @@ function onDrop(e) {
     
     Markers.push(marker);
 
-    if (!dragData.clone) {
-      elem.remove();
-
-    }
+    if (!dragData.clone) elem.remove();
   
-    elem.style.position = "absolute";
+    elem.classList.add("dragged");
     const index = Markers.length-1;
     elem.ondragstart = (event) => onMapDragStart(event, true, index);
     ElMap.parentElement.appendChild(elem);
     setDragElemTransform(marker);
   } else {
-    console.log(dragData.markerId)
     Markers[dragData.markerId].pointX = e.offsetX;
     Markers[dragData.markerId].pointY = e.offsetY;
     setDragElemTransform(Markers[dragData.markerId]);
   }
 
+  elem.onmouseup = removeDragElement;
+
   dragData.clone = false;
   dragData.dropped = false;
+}
+
+function removeDragElement(e) {
+  e.preventDefault();
+  if (e.button !== 2) return;
+  
+  const markerIndex = Markers.findIndex(m => m.element.id === e.target.id);
+  const marker = Markers.splice(markerIndex, 1)[0];
+  
+  marker.element.remove();
+  if (marker.parent) {
+    marker.parent.appendChild(marker.element);
+    marker.element.ondragstart = (event) => onDragStart(event);
+  } else {
+    marker.element.ondragstart = (event) => onDragStart(event, true);
+  }
+  marker.element.classList.remove("dragged");
+  marker.element.style.scale = 1;
 }
 
 function addZoomEvents() {
