@@ -1,3 +1,5 @@
+const DISCORD_USERNAME = "Captain Baguette#6805";
+
 // VARIABLES
 const zoomMapData = {
   scale: 1,
@@ -36,6 +38,8 @@ const ElBasePicks = document.getElementById("base-picks");
   copyPurpleToOrangePicks();
   addZoomEvents();
   setDraggableElements();
+
+  document.addEventListener("contextmenu", event => event.preventDefault());
 })();
 
 function setDraggableElements() {
@@ -43,6 +47,30 @@ function setDraggableElements() {
   const orangeDragElts = ElOrangePicks.getElementsByClassName("draggable");
   const neutralDragElts = ElNeutralPicks.getElementsByClassName("draggable");
   const baseDragElts = ElBasePicks.getElementsByClassName("draggable");
+
+  for (const el of purpleDragElts) {
+    el.id = `dragId-${INC_DRAGID}`;
+    el.setAttribute("draggable", "true");
+    el.addEventListener("dragstart", (event) => onDragStart(event));
+    
+    INC_DRAGID++;
+  }
+
+  for (const el of orangeDragElts) {
+    el.id = `dragId-${INC_DRAGID}`;
+    el.setAttribute("draggable", "true");
+    el.addEventListener("dragstart", (event) => onDragStart(event));
+
+    INC_DRAGID++;
+  }
+
+  for (const el of neutralDragElts) {
+    el.id = `dragId-${INC_DRAGID}`;
+    el.setAttribute("draggable", "true");
+    el.addEventListener("dragstart", (event) => onDragStart(event, true));
+
+    INC_DRAGID++;
+  }
 
   for (const el of baseDragElts) {
     el.id = `dragId-${INC_DRAGID}`;
@@ -75,9 +103,9 @@ function onDrop(e) {
     element: undefined, 
     parent: undefined, 
     pointX: 0,
-    pointY: 0
+    pointY: 0,
+    clone: dragData.clone
   };
-  console.log(e)
 
   if (!dragData.dropped) {
     if (dragData.clone) {
@@ -86,8 +114,6 @@ function onDrop(e) {
   
       INC_DRAGID++;
     }
-  
-    ElMap.parentElement.appendChild(elem);
   
     marker.element = elem; 
     marker.parent = elem.parentElement; 
@@ -98,19 +124,39 @@ function onDrop(e) {
 
     if (!dragData.clone) elem.remove();
   
-    elem.style.position = "absolute";
+    elem.classList.add("dragged");
     const index = Markers.length-1;
     elem.ondragstart = (event) => onMapDragStart(event, true, index);
+    ElMap.parentElement.appendChild(elem);
     setDragElemTransform(marker);
   } else {
-    console.log(dragData.markerId)
     Markers[dragData.markerId].pointX = e.offsetX;
     Markers[dragData.markerId].pointY = e.offsetY;
     setDragElemTransform(Markers[dragData.markerId]);
   }
 
+  elem.onmouseup = removeDragElement;
+
   dragData.clone = false;
   dragData.dropped = false;
+}
+
+function removeDragElement(e) {
+  e.preventDefault();
+  if (e.button !== 2) return;
+  
+  const markerIndex = Markers.findIndex(m => m.element.id === e.target.id);
+  const marker = Markers.splice(markerIndex, 1)[0];
+  
+  marker.element.remove();
+  if (marker.parent) {
+    marker.parent.appendChild(marker.element);
+    marker.element.ondragstart = (event) => onDragStart(event);
+  } else {
+    marker.element.ondragstart = (event) => onDragStart(event, true);
+  }
+  marker.element.classList.remove("dragged");
+  marker.element.style.scale = 1;
 }
 
 function addZoomEvents() {
@@ -179,9 +225,9 @@ function copyToClipboard(text) {
 }
 
 function copyDiscordUsername() {
-  copyToClipboard(ElDiscordUsername.innerText);
+  copyToClipboard(DISCORD_USERNAME);
   
-  ElDiscordTooltip.innerHTML = "Copied: " + ElDiscordUsername.innerText;
+  ElDiscordTooltip.innerHTML = `Copied: ${DISCORD_USERNAME}`;
   ElDiscordTooltip.classList.remove("hide");
 }
 
