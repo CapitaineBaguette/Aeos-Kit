@@ -66,21 +66,8 @@ body {
   object-fit: contain;
   margin: auto;
 	width: 100%;
-	position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-/* Zoom */
-.zoom-top {
-  transform: scale(2.5) translate(-20%, 5%);
-}
-.zoom-mid {
-  transform: scale(2.5) translate(-20%, -20%);
-}
-.zoom-bot {
-  transform: scale(2.5) translate(-20%, -40%);
+  transform-origin: 0px 0px;
+  transform: scale(1) translate(0px, 0px);
 }
 
 

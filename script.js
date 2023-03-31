@@ -1,5 +1,10 @@
 // VARIABLES
-const PARSER = new DOMParser();
+const zoomMapData = {
+  scale: 1,
+  pointX: 0,
+  pointY: 0,
+  start: {x: 0, y: 0}
+} 
 
 // DATA
 const Markers = [];
@@ -22,6 +27,11 @@ const ElNeutralPicks = document.getElementById("neutral-picks");
 
 (() => {
   copyPurpleToOrangePicks();
+  ElMap.addEventListener("mousedown", onMapMouseDown);
+  ElMap.addEventListener("mouseup", onMapMouseUp);
+  ElMap.addEventListener("mousemove", onMapMouseMove);
+  ElMap.addEventListener("mousewheel", onMapMouseWheel);
+
 })();
 
 function copyPurpleToOrangePicks() {
@@ -105,24 +115,47 @@ function toggleMenu(self, id) {
   elMenu.parentElement.classList.toggle("closed");
 }
 
-function handleZoomMap(self, type) {
-  const elements = document.querySelectorAll(".zoomin");
-  for (const el of elements) {
-    el.classList.remove("zoomin");
-  }
-  if (self) self.classList.add("zoomin");
+function resetZoomMap() {
+  zoomMapData.scale = 1;
+  zoomMapData.pointX = 0;
+  zoomMapData.pointY = 0;
+  zoomMapData.start = {x: 0, y: 0};
 
-  if (type === "top") {
-    ElMap.classList.remove("zoom-mid", "zoom-bot");
-    ElMap.classList.add("zoom-top");
-  } else if (type ===  "mid") {
-    ElMap.classList.remove("zoom-top", "zoom-bot");
-    ElMap.classList.add("zoom-mid");
-  } else if (type === "bot") {
-    ElMap.classList.remove("zoom-top", "zoom-mid");
-    ElMap.classList.add("zoom-bot");
-  } else {
-    ElMap.classList.remove("zoom-top", "zoom-mid", "zoom-bot");
-  }
-  
+  setMapTransform();
+}
+
+function onMapMouseDown(e) {
+  e.preventDefault();
+  zoomMapData.start.x = e.clientX - zoomMapData.pointX;
+  zoomMapData.start.y = e.clientY - zoomMapData.pointY;
+  zoomMapData.panning = true;
+}
+
+function onMapMouseUp(e) {
+  zoomMapData.panning = false;
+}
+
+function onMapMouseMove(e) {
+  e.preventDefault();
+  if (!zoomMapData.panning) return;
+  zoomMapData.pointX = e.clientX - zoomMapData.start.x;
+  zoomMapData.pointY = e.clientY - zoomMapData.start.y;
+  setMapTransform();
+}
+
+function onMapMouseWheel(e) {
+  e.preventDefault();
+  const xs = (e.clientX - zoomMapData.pointX) / zoomMapData.scale;
+  const ys = (e.clientY - zoomMapData.pointY) / zoomMapData.scale;
+  const delta = (e.wheelDelta ? e.wheelDelta : -e.deltaY);
+  (delta > 0) ? (zoomMapData.scale += 0.1) : (zoomMapData.scale -= 0.1);
+  if (zoomMapData.scale < 0.1) zoomMapData.scale = 0.1;
+  zoomMapData.pointX = e.clientX - xs * zoomMapData.scale;
+  zoomMapData.pointY = e.clientY - ys * zoomMapData.scale;
+
+  setMapTransform();
+}
+
+function setMapTransform() {
+  ElMap.style.transform = `translate(${zoomMapData.pointX}px, ${zoomMapData.pointY}px) scale(${zoomMapData.scale})`;
 }
