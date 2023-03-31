@@ -1,3 +1,5 @@
+const DISCORD_USERNAME = "Captain Baguette#6805";
+
 // VARIABLES
 const zoomMapData = {
   scale: 1,
@@ -104,7 +106,7 @@ function onDrop(e) {
     pointY: 0,
     clone: dragData.clone
   };
-  console.log(1, dragData, marker)
+
   if (!dragData.dropped) {
     if (dragData.clone) {
       elem = elem.cloneNode(true);
@@ -223,9 +225,9 @@ function copyToClipboard(text) {
 }
 
 function copyDiscordUsername() {
-  copyToClipboard(ElDiscordUsername.innerText);
+  copyToClipboard(DISCORD_USERNAME);
   
-  ElDiscordTooltip.innerHTML = "Copied: " + ElDiscordUsername.innerText;
+  ElDiscordTooltip.innerHTML = `Copied: ${DISCORD_USERNAME}`;
   ElDiscordTooltip.classList.remove("hide");
 }
 

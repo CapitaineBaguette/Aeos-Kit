@@ -107,16 +107,21 @@ body {
 }
 
 /* Name on bottom */
-.name {
-  color: #bababa;
-  background: #000000a4;
-  font-size: 1em;
+.links {
   position: fixed;
+  display: flex;
+  gap: 10px;
+  background: #000000a4;
   bottom: 0;
-  left: 50%;
-	translate: -50%;
+  right: 0;
   padding: 5px;
 }
+
+.discord, .help {
+  height: 20px;
+}
+
+
 
 /* Tooltips */
 .tooltip .tooltiptext {
@@ -128,9 +133,9 @@ body {
   padding: 5px;
   position: absolute;
   z-index: 1;
-  bottom: 150%;
-  left: 50%;
-  margin-left: -75px;
+  right: 0;
+  top: 0;
+  transform: translateY(-100%);
   transition: opacity 0.3s;
 }
 
@@ -138,11 +143,15 @@ body {
   content: "";
   position: absolute;
   top: 100%;
-  left: 50%;
+  right: 10px;
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
   border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover {
+  cursor: pointer;
 }
 
 /* Menus */
@@ -153,13 +162,13 @@ body {
 }
 
 .left-menu {
-  height: 100vh;
+  height: 80vh;
   top: 0;
   left: 0;
 }
 
 .right-menu {
-  height: 100vh;
+  height: 80vh;
   top: 0;
   right: 0;
 }
