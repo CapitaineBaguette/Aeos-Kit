@@ -3,36 +3,122 @@ const zoomMapData = {
   scale: 1,
   pointX: 0,
   pointY: 0,
-  start: {x: 0, y: 0}
+  start: {x: 0, y: 0},
+  delta: 0
 } 
 
 // DATA
+let INC_DRAGID = 0;
+const dragData = {
+  clone: false,
+  pointX: 0,
+  pointY: 0,
+  dropped: false,
+  markerId: -1
+}
 const Markers = [];
 
 // ELEMENTS
 const ElMap = document.getElementById("map");
 const ElDiscordUsername = document.getElementById("discord-username");
 const ElDiscordTooltip = document.getElementById("discord-tooltip");
-
 const ElPurplePicks = document.getElementById("purple-picks");
 const ElPurpleAttackers = document.getElementById("purple-attackers");
 const ElPurpleDefenders = document.getElementById("purple-defenders");
 const ElPurpleSupporters = document.getElementById("purple-supporters");
 const ElPurpleAllrounders = document.getElementById("purple-allrounders");
 const ElPurpleSpeedsters = document.getElementById("purple-speedsters");
-
 const ElOrangePicks = document.getElementById("orange-picks");
-
 const ElNeutralPicks = document.getElementById("neutral-picks");
+const ElBasePicks = document.getElementById("base-picks");
 
 (() => {
   copyPurpleToOrangePicks();
+  addZoomEvents();
+  setDraggableElements();
+})();
+
+function setDraggableElements() {
+  const purpleDragElts = ElPurplePicks.getElementsByClassName("draggable");
+  const orangeDragElts = ElOrangePicks.getElementsByClassName("draggable");
+  const neutralDragElts = ElNeutralPicks.getElementsByClassName("draggable");
+  const baseDragElts = ElBasePicks.getElementsByClassName("draggable");
+
+  for (const el of baseDragElts) {
+    el.id = `dragId-${INC_DRAGID}`;
+    el.setAttribute("draggable", "true");
+    el.addEventListener("dragstart", (event) => onDragStart(event, true));
+
+    INC_DRAGID++;
+  }
+}
+
+function onDragStart(e, clone) {
+  dragData.clone = clone;
+  e.dataTransfer.setData("text/plain", e.target.id);
+}
+
+function onMapDragStart(e, dropped, markerId) {
+  dragData.dropped = dropped;
+  dragData.markerId = markerId;
+  e.dataTransfer.setData("text/plain", e.target.id);
+}
+
+function onDragOver(e) {
+  e.preventDefault();
+}
+
+function onDrop(e) {
+  const id = e.dataTransfer.getData("text");
+  let elem = document.getElementById(id);
+  const marker = { 
+    element: undefined, 
+    parent: undefined, 
+    pointX: 0,
+    pointY: 0
+  };
+  console.log(e)
+
+  if (!dragData.dropped) {
+    if (dragData.clone) {
+      elem = elem.cloneNode(true);
+      elem.id = `dragId-${INC_DRAGID}`;
+  
+      INC_DRAGID++;
+    }
+  
+    ElMap.parentElement.appendChild(elem);
+  
+    marker.element = elem; 
+    marker.parent = elem.parentElement; 
+    marker.pointX = e.offsetX;
+    marker.pointY = e.offsetY;
+    
+    Markers.push(marker);
+
+    if (!dragData.clone) elem.remove();
+  
+    elem.style.position = "absolute";
+    const index = Markers.length-1;
+    elem.ondragstart = (event) => onMapDragStart(event, true, index);
+    setDragElemTransform(marker);
+  } else {
+    console.log(dragData.markerId)
+    Markers[dragData.markerId].pointX = e.offsetX;
+    Markers[dragData.markerId].pointY = e.offsetY;
+    setDragElemTransform(Markers[dragData.markerId]);
+  }
+
+  dragData.clone = false;
+  dragData.dropped = false;
+}
+
+function addZoomEvents() {
   ElMap.addEventListener("mousedown", onMapMouseDown);
   ElMap.addEventListener("mouseup", onMapMouseUp);
   ElMap.addEventListener("mousemove", onMapMouseMove);
   ElMap.addEventListener("mousewheel", onMapMouseWheel);
-
-})();
+}
 
 function copyPurpleToOrangePicks() {
   const cloneAtk = ElPurpleAttackers.cloneNode(true);
@@ -147,15 +233,29 @@ function onMapMouseWheel(e) {
   e.preventDefault();
   const xs = (e.clientX - zoomMapData.pointX) / zoomMapData.scale;
   const ys = (e.clientY - zoomMapData.pointY) / zoomMapData.scale;
-  const delta = (e.wheelDelta ? e.wheelDelta : -e.deltaY);
-  (delta > 0) ? (zoomMapData.scale += 0.1) : (zoomMapData.scale -= 0.1);
+  zoomMapData.delta = (e.wheelDelta ? e.wheelDelta : -e.deltaY);
+  (zoomMapData.delta > 0) ? (zoomMapData.scale += 0.1) : (zoomMapData.scale -= 0.1);
   if (zoomMapData.scale < 0.1) zoomMapData.scale = 0.1;
   zoomMapData.pointX = e.clientX - xs * zoomMapData.scale;
   zoomMapData.pointY = e.clientY - ys * zoomMapData.scale;
+
 
   setMapTransform();
 }
 
 function setMapTransform() {
   ElMap.style.transform = `translate(${zoomMapData.pointX}px, ${zoomMapData.pointY}px) scale(${zoomMapData.scale})`;
+  
+  for (const marker of Markers) {
+    marker.element.style.scale = zoomMapData.scale;
+    marker.element.style.left = `${zoomMapData.pointX + marker.pointX * zoomMapData.scale - marker.element.offsetWidth / 2}px`;
+    marker.element.style.top = `${zoomMapData.pointY + marker.pointY * zoomMapData.scale - marker.element.offsetHeight / 2}px`;
+  }
+}
+
+
+function setDragElemTransform(marker) {
+  marker.element.style.scale = zoomMapData.scale;
+  marker.element.style.left = `${zoomMapData.pointX + marker.pointX * zoomMapData.scale - marker.element.offsetWidth / 2}px`;
+  marker.element.style.top = `${zoomMapData.pointY + marker.pointY * zoomMapData.scale - marker.element.offsetHeight / 2}px`;
 }
