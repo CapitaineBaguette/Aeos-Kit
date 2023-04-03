@@ -1,6 +1,0 @@
-<!-- time ? (only visual) -->
-<!-- reset ? -->
-<!-- backward ? -->
-<!-- forward ? -->
-<!-- crayon permet de dessiner, scaling à prendre en compte -->
-<!-- gomme enlève tous les dessins -->
