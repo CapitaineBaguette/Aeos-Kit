@@ -33,6 +33,7 @@ const ElPurpleSpeedsters = document.getElementById("purple-speedsters");
 const ElOrangePicks = document.getElementById("orange-picks");
 const ElNeutralPicks = document.getElementById("neutral-picks");
 const ElBasePicks = document.getElementById("base-picks");
+const ElItemsPicks = document.getElementById("items-picks");
 
 (() => {
   copyPurpleToOrangePicks();
@@ -47,6 +48,7 @@ function setDraggableElements() {
   const orangeDragElts = ElOrangePicks.getElementsByClassName("draggable");
   const neutralDragElts = ElNeutralPicks.getElementsByClassName("draggable");
   const baseDragElts = ElBasePicks.getElementsByClassName("draggable");
+  const itemDragElts = ElItemsPicks.getElementsByClassName("draggable");
 
   for (const el of purpleDragElts) {
     el.id = `dragId-${INC_DRAGID}`;
@@ -73,6 +75,14 @@ function setDraggableElements() {
   }
 
   for (const el of baseDragElts) {
+    el.id = `dragId-${INC_DRAGID}`;
+    el.setAttribute("draggable", "true");
+    el.addEventListener("dragstart", (event) => onDragStart(event, true));
+
+    INC_DRAGID++;
+  }
+
+  for (const el of itemDragElts) {
     el.id = `dragId-${INC_DRAGID}`;
     el.setAttribute("draggable", "true");
     el.addEventListener("dragstart", (event) => onDragStart(event, true));
