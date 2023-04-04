@@ -9,29 +9,36 @@
 </head>
 <body>
 
-  	<!-- MAP BACKGROUND-->
-	<div>
-		<img id="map" class="map" ondragover="onDragOver(event)" ondrop="onDrop(event)" src="ressources/map_background/map.png">
+	<!-- MAP BACKGROUND-->
+
+	<div id="map-container" class="map-container" ondragover="onDragOver(event)" ondrop="onDrop(event)">
+		<img id="map" class="map" src="ressources/map_background/map.png">
+		<canvas id="canvas" class="canvas"></canvas>
 	</div>
 
-	<!-- RESET ZOOM BUTTON-->
 	<div class="btnholder">
+		<!-- RESET ZOOM BUTTON-->
 		<div onclick="resetZoomMap()" class="zoombtn">RESET ZOOM</div>
+		<div class="drawtool">
+			<div id="pencil-tool" onclick="handleDrawing()">
+				<img id="pencil" class="pencil" src="ressources/icons/Pencil.png">
+			</div>
+			<div id="draw-color-tool" disabled>
+				<input id="draw-color" class="draw-color" oninput="setDrawColor(this)" type="color" value="#ff0000">
+			</div>
+			<div id="draw-size-tool" disabled>
+				<label>Size:</label>
+				<input id="draw-size" class="draw-size" onchange="setDrawSize(this)" type="number" min="1" max="10" value="3" step="1">
+			</div>
+			<!-- <div><img id="undo" class="undo" src=""></div> -->
+			<!-- <div><img id="redo" class="redo" src=""></div> -->
+			<div id="eraser-tool" onclick="clearCanvas()" disabled>
+				<img id="eraser" class="eraser" src="ressources/icons/eraser.png">
+			</div>
+		</div>
+		<!-- <div><img id="save" class="save" src=""></div> -->
 	</div>
 
-	
-<!-- TOP BUTTONS
-	<div>
-		PENCIL BUTTON
-		<div>
-			<img id="pencil" class="pencil" src="ressources/icons/Pencil.png">
-		</div>
-		ERASER BUTTON
-		<div>
-			<img id="eraser" class="eraser" src="ressources/icons/eraser.png">
-		</div>
-	</div>
--->
 	<!-- LINKS -->
 	<div class="links">
 		<div>
