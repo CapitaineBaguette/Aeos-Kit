@@ -31,6 +31,7 @@ const ElMapContainer = document.getElementById("map-container");
 const ElMap = document.getElementById("map");
 const ElDiscordUsername = document.getElementById("discord-username");
 const ElDiscordTooltip = document.getElementById("discord-tooltip");
+
 const ElPurplePicks = document.getElementById("purple-picks");
 const ElPurpleAttackers = document.getElementById("purple-attackers");
 const ElPurpleDefenders = document.getElementById("purple-defenders");
@@ -62,6 +63,7 @@ const ElDrawSize = document.getElementById("draw-size");
   addZoomEvents();
   setDraggableElements();
   addDrawingEvents();
+  addScrollEvents();
   
   setDrawColor(ElDrawColor);
   setDrawSize(ElDrawSize);
@@ -518,4 +520,41 @@ function setDragElemTransform(marker) {
   marker.element.style.scale = zoomMapData.scale;
   marker.element.style.left = `${zoomMapData.pointX + marker.pointX * zoomMapData.scale - marker.element.offsetWidth / 2}px`;
   marker.element.style.top = `${zoomMapData.pointY + marker.pointY * zoomMapData.scale - marker.element.offsetHeight / 2}px`;
+}
+
+/**
+ * Ajoute des événements de défilement sur les éléments qui peuvent en avoir besoin.
+ */
+function addScrollEvents() {
+  ElPurpleAttackers.addEventListener("wheel", (e) => onScrollY(e, ElPurpleAttackers));
+  ElPurpleDefenders.addEventListener("wheel", (e) => onScrollY(e, ElPurpleDefenders));
+  ElPurpleSupporters.addEventListener("wheel", (e) => onScrollY(e, ElPurpleSupporters));
+  ElPurpleAllrounders.addEventListener("wheel", (e) => onScrollY(e, ElPurpleAllrounders));
+  ElPurpleSpeedsters.addEventListener("wheel", (e) => onScrollY(e, ElPurpleSpeedsters));
+  
+  const elOrangeAtk = document.getElementById("orange-attackers");
+  const elOrangeDef = document.getElementById("orange-defenders");
+  const elOrangeSup = document.getElementById("orange-supporters");
+  const elOrangeAlr = document.getElementById("orange-allrounders");
+  const elOrangeSpd = document.getElementById("orange-speedsters");
+  elOrangeAtk.addEventListener("wheel", (e) => onScrollY(e, elOrangeAtk));
+  elOrangeDef.addEventListener("wheel", (e) => onScrollY(e, elOrangeDef));
+  elOrangeSup.addEventListener("wheel", (e) => onScrollY(e, elOrangeSup));
+  elOrangeAlr.addEventListener("wheel", (e) => onScrollY(e, elOrangeAlr));
+  elOrangeSpd.addEventListener("wheel", (e) => onScrollY(e, elOrangeSpd));
+  
+  ElNeutralPicks.addEventListener("wheel", (e) => onScrollY(e, ElNeutralPicks));
+  const elBitem = document.getElementById("bitem");
+  const hitem = document.getElementById("hitem");
+  elBitem.addEventListener("wheel", (e) => onScrollY(e, elBitem));
+  hitem.addEventListener("wheel", (e) => onScrollY(e, hitem));
+  ElBasePicks.addEventListener("wheel", (e) => onScrollY(e, ElBasePicks));
+}
+
+/**
+ * Fait défiler horizontalement
+ */
+function onScrollY(e, container) {
+  e.preventDefault();
+  container.scrollLeft += e.deltaY;
 }

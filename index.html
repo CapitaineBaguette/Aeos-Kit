@@ -52,6 +52,7 @@
 	
   	<!-- PURPLE SIDE -->
 	<div id="left-menu" class="menu left-menu">
+		<div onclick="toggleMenu(this, 'purple-picks')" class="purple-side close-menu"><p>◄</p></div>
 		<div id="purple-picks" class="draggable-container">
 			<!-- ATTACKERS -->
 			<div id="purple-attackers" class="draggable-items purple-side">
@@ -179,11 +180,11 @@
 				<div class="draggable purple-mon" style="background-image: url('ressources/playable_pokemon/zoroark.png');"></div>
 			</div>
 		</div>
-		<span onclick="toggleMenu(this, 'purple-picks')" class="purple-side">◄</span>
 	</div>
 
 	<!-- NEUTRAL POKEMON -->
 	<div id="bottom-left-menu" class="menu bottom-left-menu">
+		<div onclick="toggleMenu(this, 'neutral-picks')" class="neutral-side close-menu"><p>▼</p></div>
 		<div id="neutral-picks" class="draggable-container draggable-items neutral-side">
 			<!-- REGIELEKI -->
 			<div class="draggable neutral-mon" style="background-image: url('ressources/wild_pokemon/regieleki.png');"></div>
@@ -217,13 +218,12 @@
 			<div class="draggable neutral-mon" style="background-image: url('ressources/wild_pokemon/indeedee.png');"></div>
 			
 		</div>
-		<span onclick="toggleMenu(this, 'neutral-picks')" class="neutral-side">▼</span>
 	</div>
 	
   	<!-- ORANGE SIDE -->
 	<div id="right-menu" class="menu right-menu">
+		<div onclick="toggleMenu(this, 'orange-picks')" class="orange-side close-menu"><p>►</p></div>
 		<div id="orange-picks" class="draggable-container"></div>
-		<span onclick="toggleMenu(this, 'orange-picks')" class="orange-side">►</span>
 	</div>
 
 	<!-- BASES -->
@@ -236,11 +236,12 @@
 			<div class="draggable berry-mon" style="background-image: url('ressources/berries/sailak_berry.png');"></div>
 			<div class="draggable berry-mon" style="background-image: url('ressources/berries/oran_berry.png');"></div>
 		</div>
-		<span onclick="toggleMenu(this, 'base-picks')" class="base-side">▼</span>
+		<div onclick="toggleMenu(this, 'base-picks')" class="base-side close-menu"><p>▼</p></div>
 	</div>
 
  	<!-- ITEMS -->
   <div id="bottom-middle-menu" class="menu bottom-middle-menu">
+		<div onclick="toggleMenu(this, 'items-picks')" class="item-side close-menu"><p>▼</p></div>
 		<div id="items-picks" class="draggable-container">
 			<!-- BATTLE ITEMS -->
 			<div id="bitem" class="draggable-items item-side">

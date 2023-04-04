@@ -234,6 +234,8 @@ body {
 
 /* Icon on bottom right corner */
 .links {
+  width: 5vw;
+  border-radius: 5px 5px 0 0;
   position: fixed;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -242,7 +244,12 @@ body {
   background: #000000a4;
   bottom: 0;
   right: 0;
-  padding: 5px;
+}
+
+.links > * {
+  padding: 2px;
+  display: flex;
+  justify-content: center;
 }
 
 .discord, .help {
@@ -298,31 +305,34 @@ body {
 }
 
 .left-menu {
-  height: 80vh;
-  top: 0;
+  height: 75vh;
+  top: 2.5vh;
   left: 0;
 }
 
 .right-menu {
-  height: 80vh;
-  top: 0;
+  height: 75vh;
+  top: 2.5vh;
   right: 0;
 }
 
 .bottom-left-menu {
-  height: 20vh;
+  width: 25vw;
+  height: 15vh;
   bottom: 0;
-  left: 21vw;
+  left: 7vw;
 }
 
 .bottom-right-menu {
-  height: 20vh;
+  width: 25vw;
+  height: 15vh;
   bottom: 0;
-  right: 21vw;
+  right: 7vw;
 }
 
 .bottom-middle-menu {
-  height: 20vh;
+  width: 25vw;
+  height: 15vh;
   bottom: 0;
   left: 50vw;
   -webkit-transform: translateX(-50%);
@@ -331,37 +341,31 @@ body {
 }
 
 .left-menu .draggable-items {
+  border-top: 2px solid #2d2d2d7a;
   border-radius: 0px 10px 10px 0px;
 }
 
 .right-menu .draggable-items {
+  border-top: 2px solid #2d2d2d7a;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: reverse;
       -ms-flex-direction: row-reverse;
           flex-direction: row-reverse;
   border-radius: 10px 0px 0px 10px;
+  direction: rtl;
 }
 
 .bottom-left-menu .draggable-items {
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
   border-radius: 10px 10px 0px 0px;
 }
 
 .bottom-right-menu .draggable-items {
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
   border-radius: 10px 10px 0px 0px;
+  direction: rtl;
 }
 
 .bottom-middle-menu .draggable-items {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
   border-radius: 10px 10px 0px 0px;
-  -ms-flex-direction: column;
-      flex-direction: column;
 }
 
 .bottom-middle-menu .draggable-container {
@@ -370,50 +374,69 @@ body {
   display: flex;
 }
 
-.menu span {
+.menu .close-menu {
   position: absolute;
-  padding: 10px;
+  z-index: -1;
 }
 
-.menu span:hover {
+.menu .close-menu:hover {
   color: #fff;
   cursor: pointer;
 }
 
-.left-menu span {
+.left-menu .close-menu {
   top: 0;
-  right: 0;
+  right: 100%;
   -webkit-transform: translate(100%, 50%);
       -ms-transform: translate(100%, 50%);
           transform: translate(100%, 50%);
   border-radius: 0px 10px 10px 0px;
+  padding: 1vw 1vh 1vw 20vw;
+  background: linear-gradient(270deg, #5a4aade1 0%, #5a4aade1 5%, #00000000 15%);
 }
 
-.right-menu span {
+.right-menu .close-menu {
   top: 0;
-  left: 0;
+  left: 100%;
   -webkit-transform: translate(-100%, 50%);
       -ms-transform: translate(-100%, 50%);
           transform: translate(-100%, 50%);
   border-radius: 10px 0px 0px 10px;
+  padding: 1vw 20vw 1vw 1vh;
+  background: linear-gradient(90deg, #76453cdc 0%, #76453cdc 5%, #00000000 15%);
 }
 
-.bottom-left-menu span {
-  top: 0;
+.bottom-left-menu .close-menu {
+  top: 100%;
   left: 50%;
   -webkit-transform: translate(-50%, -100%);
       -ms-transform: translate(-50%, -100%);
           transform: translate(-50%, -100%);
   border-radius: 10px 10px 0px 0px;
+  padding: 1vh 1vw 15vh 1vw;
+  background: linear-gradient(180deg, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
 }
 
-.bottom-right-menu span {
-  top: 0;
+.bottom-right-menu .close-menu {
+  top: 100%;
   left: 50%;
   -webkit-transform: translate(-50%, -100%);
       -ms-transform: translate(-50%, -100%);
           transform: translate(-50%, -100%);
   border-radius: 10px 10px 0px 0px;
+  padding: 1vh 1vw 15vh 1vw;
+  background: linear-gradient(180deg, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
+}
+
+.bottom-middle-menu .close-menu {
+  top: 100%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -100%);
+      -ms-transform: translate(-50%, -100%);
+          transform: translate(-50%, -100%);
+  border-radius: 10px 10px 0px 0px;
+  padding: 1vh 1vw 15vh 1vw;
+  background: linear-gradient(180deg, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
 }
 
 .menu.closed {
@@ -448,6 +471,16 @@ body {
           transform: translateY(100%);
 }
 
+.bottom-middle-menu.closed {
+  -webkit-transform: translate(-50%, 100%);
+      -ms-transform: translate(-50%, 100%);
+          transform: translate(-50%, 100%);
+}
+
+.close-menu p {
+  margin: 0;
+}
+
 /* Draggables */
 .draggable-container {
   height: 100%;
@@ -456,17 +489,13 @@ body {
 }
 
 .draggable-items {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  border-top: 2px solid #2d2d2d7a;
-  padding: 5px;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  gap: 2px;
+  width: 100%;
+  overflow: auto;
+  white-space: nowrap;
+  display: inline-grid;
+  grid-template-columns: repeat(15, 1fr);
+  align-items: center;
+  gap: 3px;
 }
 
 .draggable {
@@ -476,6 +505,7 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
+  display: inline-block;
 }
 
 .draggable.bitem-mon {
@@ -492,3 +522,66 @@ body {
   height: 3.2vh;
   width: 3.2vh;
 }*/
+
+/* Scrollbars */
+/* width */
+::-webkit-scrollbar {
+  height: 2vh;
+}
+
+/* Track */
+
+.purple-side::-webkit-scrollbar-track {
+  background: #5a4aade1; 
+  border-radius: 0 0 10px 0;
+}
+.orange-side::-webkit-scrollbar-track {
+  background: #76453cdc; 
+  border-radius: 0 0 0 10px;
+}
+.neutral-side::-webkit-scrollbar-track {
+  background: #7c7776de; 
+}
+.item-side::-webkit-scrollbar-track {
+  background: #7c7776de;  
+}
+.base-side::-webkit-scrollbar-track {
+  background: #7c7776de;  
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px 10px 10px 10px;
+}
+.purple-side::-webkit-scrollbar-thumb {
+  background: #432eafe1; 
+}
+.orange-side::-webkit-scrollbar-thumb {
+  background: #723126dc; 
+}
+.neutral-side::-webkit-scrollbar-thumb {
+  background: #535150de;  
+}
+.item-side::-webkit-scrollbar-thumb {
+  background: #535150de;
+}
+.base-side::-webkit-scrollbar-thumb {
+  background: #535150de;
+}
+
+/* Handle on hover */
+.purple-side::-webkit-scrollbar-thumb:hover {
+  background: #432eaf; 
+}
+.orange-side::-webkit-scrollbar-thumb:hover {
+  background: #723126; 
+}
+.neutral-side::-webkit-scrollbar-thumb:hover {
+  background: #535150;  
+}
+.item-side::-webkit-scrollbar-thumb:hover {
+  background: #535150;
+}
+.base-side::-webkit-scrollbar-thumb:hover {
+  background: #535150;
+}
