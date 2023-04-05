@@ -42,6 +42,8 @@ const ElOrangePicks = document.getElementById("orange-picks");
 const ElNeutralPicks = document.getElementById("neutral-picks");
 const ElBasePicks = document.getElementById("base-picks");
 const ElItemsPicks = document.getElementById("items-picks");
+const ElNeutralPokemon = document.getElementById("neutral-pokemon");
+const ElBaseMisc = document.getElementById("base-misc");
 
 const ElPencilTool = document.getElementById("pencil-tool");
 const ElDrawColorTool = document.getElementById("draw-color-tool");
@@ -344,57 +346,32 @@ function addZoomEvents() {
 }
 
 function copyPurpleToOrangePicks() {
-  const cloneAtk = ElPurpleAttackers.cloneNode(true);
-  const cloneDfd = ElPurpleDefenders.cloneNode(true);
-  const cloneSup = ElPurpleSupporters.cloneNode(true);
-  const cloneArd = ElPurpleAllrounders.cloneNode(true);
-  const cloneSpd = ElPurpleSpeedsters.cloneNode(true);
+  const clonePurple = ElPurplePicks.cloneNode(true);
+  const clones = [];
+  for(let i = 0; i < clonePurple.children.length; i++) {
+    const cloneCat = clonePurple.children[i];
+    cloneCat.classList.remove("purple-side");
+    cloneCat.classList.add("orange-side");
 
-  cloneAtk.id = "orange-attackers";
-  cloneAtk.classList.remove("purple-side");
-  cloneAtk.classList.add("orange-side");
-  for (let i = 0; i < cloneAtk.children.length; i++) {
-    cloneAtk.children[i].classList.remove("purple-mon");
-    cloneAtk.children[i].classList.add("orange-mon");
-  }
+    for (let j = 0; j < cloneCat.children.length; j++) {
+      const cloneRole = cloneCat.children[j];
+      if (cloneRole.id) {
+        cloneRole.id = cloneRole.id.replace("purple", "orange");
 
-  cloneDfd.id = "orange-defenders";
-  cloneDfd.classList.remove("purple-side");
-  cloneDfd.classList.add("orange-side");
-  for (let i = 0; i < cloneDfd.children.length; i++) {
-    cloneDfd.children[i].classList.remove("purple-mon");
-    cloneDfd.children[i].classList.add("orange-mon");
-  }
-
-  cloneSup.id = "orange-supporters";
-  cloneSup.classList.remove("purple-side");
-  cloneSup.classList.add("orange-side");
-  for (let i = 0; i < cloneSup.children.length; i++) {
-    cloneSup.children[i].classList.remove("purple-mon");
-    cloneSup.children[i].classList.add("orange-mon");
-  }
-
-  cloneArd.id = "orange-allrounders";
-  cloneArd.classList.remove("purple-side");
-  cloneArd.classList.add("orange-side");
-  for (let i = 0; i < cloneArd.children.length; i++) {
-    cloneArd.children[i].classList.remove("purple-mon");
-    cloneArd.children[i].classList.add("orange-mon");
-  }
-
-  cloneSpd.id = "orange-speedsters";
-  cloneSpd.classList.remove("purple-side");
-  cloneSpd.classList.add("orange-side");
-  for (let i = 0; i < cloneSpd.children.length; i++) {
-    cloneSpd.children[i].classList.remove("purple-mon");
-    cloneSpd.children[i].classList.add("orange-mon");
+        for (let k = 0; k < cloneRole.children.length; k++) {
+          const clonePoke = cloneRole.children[k];
+          clonePoke.classList.remove("purple-mon");
+          clonePoke.classList.add("orange-mon");
+        }
+      }
+    }
+    clones.push(cloneCat);
+    
   }
   
-  ElOrangePicks.appendChild(cloneAtk);
-  ElOrangePicks.appendChild(cloneDfd);
-  ElOrangePicks.appendChild(cloneSup);
-  ElOrangePicks.appendChild(cloneArd);
-  ElOrangePicks.appendChild(cloneSpd);
+  for (const clone of clones) {
+    ElOrangePicks.appendChild(clone);
+  }
 }
 
 /**
@@ -543,12 +520,12 @@ function addScrollEvents() {
   elOrangeAlr.addEventListener("wheel", (e) => onScrollY(e, elOrangeAlr));
   elOrangeSpd.addEventListener("wheel", (e) => onScrollY(e, elOrangeSpd));
   
-  ElNeutralPicks.addEventListener("wheel", (e) => onScrollY(e, ElNeutralPicks));
+  ElNeutralPokemon.addEventListener("wheel", (e) => onScrollY(e, ElNeutralPokemon));
   const elBitem = document.getElementById("bitem");
   const hitem = document.getElementById("hitem");
   elBitem.addEventListener("wheel", (e) => onScrollY(e, elBitem));
   hitem.addEventListener("wheel", (e) => onScrollY(e, hitem));
-  ElBasePicks.addEventListener("wheel", (e) => onScrollY(e, ElBasePicks));
+  ElBaseMisc.addEventListener("wheel", (e) => onScrollY(e, ElBaseMisc));
 }
 
 /**
