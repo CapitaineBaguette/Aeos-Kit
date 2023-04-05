@@ -14,7 +14,9 @@ const drawingData = {
   drawing: false,
   lastPointX: null,
   lastPointY: null,
-  size: 1
+  size: 1,
+  history: [],
+  historyPosition: 0
 }
 
 const dragData = {
@@ -48,6 +50,8 @@ const ElPencilTool = document.getElementById("pencil-tool");
 const ElDrawColorTool = document.getElementById("draw-color-tool");
 const ElDrawSizeTool = document.getElementById("draw-size-tool");
 const ElEraserTool = document.getElementById("eraser-tool");
+const ElUndoTool = document.getElementById("undo-tool");
+const ElRedoTool = document.getElementById("redo-tool");
 
 const ElCanvas = document.getElementById("canvas");
 const Ctx = ElCanvas.getContext("2d");
@@ -99,6 +103,11 @@ function setDrawSize(self) {
  */
 function clearCanvas() {
   Ctx.clearRect(0, 0, Ctx.canvas.width, Ctx.canvas.height);
+  if (drawingData.historyPosition < drawingData.history.length-1) {
+    drawingData.history.splice(drawingData.historyPosition + 1);
+  }
+  drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
+  drawingData.historyPosition++;
 }
 
 /**
@@ -116,11 +125,15 @@ function handleDrawing() {
     ElDrawColorTool.removeAttribute("disabled");
     ElDrawSizeTool.removeAttribute("disabled");
     ElEraserTool.removeAttribute("disabled");  
+    ElUndoTool.removeAttribute("disabled"); 
+    ElRedoTool.removeAttribute("disabled"); 
   } else {
     ElCanvas.classList.remove("drawing");
     ElDrawColorTool.setAttribute("disabled", "");
     ElDrawSizeTool.setAttribute("disabled", "");
     ElEraserTool.setAttribute("disabled", "");
+    ElUndoTool.setAttribute("disabled", "");
+    ElRedoTool.setAttribute("disabled", "");
   }
 }
 
@@ -131,6 +144,7 @@ function handleDrawing() {
  * et en ajustant la taille du pinceau en fonction de la valeur du curseur.
  */
 function addDrawingEvents() {
+  drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
   ElCanvas.addEventListener("mousedown", (e) => {
     e.preventDefault();
     if (e.button !== 0) return;
@@ -139,7 +153,14 @@ function addDrawingEvents() {
     drawingData.lastPointY = (e.clientY - zoomMapData.pointY) / zoomMapData.scale;
   });
 
-  ElCanvas.addEventListener("mouseup", (e) => drawingData.drawing = false);
+  ElCanvas.addEventListener("mouseup", (e) => {
+    drawingData.drawing = false;
+    if (drawingData.historyPosition < drawingData.history.length-1) {
+      drawingData.history.splice(drawingData.historyPosition + 1);
+    }
+    drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
+    drawingData.historyPosition++;
+  });
   ElCanvas.addEventListener("mouseleave", (e) => drawingData.drawing = false);
 
   ElCanvas.addEventListener("mousemove", (e) => {
@@ -172,6 +193,20 @@ function addDrawingEvents() {
     drawingData.lastPointX = pointX;
     drawingData.lastPointY = pointY;
   });
+}
+
+function redo() {
+  if(drawingData.history.length > 1 && drawingData.historyPosition < drawingData.history.length-1) {
+    drawingData.historyPosition++;
+    Ctx.putImageData(drawingData.history[drawingData.historyPosition], 0, 0);
+  }
+}
+
+function undo() {
+  if(drawingData.history.length > 1 && drawingData.historyPosition > 0) {
+    drawingData.historyPosition--;
+    Ctx.putImageData(drawingData.history[drawingData.historyPosition], 0, 0);
+  }
 }
 
 

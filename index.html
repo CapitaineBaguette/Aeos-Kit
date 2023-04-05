@@ -19,7 +19,9 @@
 	<!-- TOP TOLLBAR -->
 	<div class="btnholder">
 		<!-- RESET ZOOM BUTTON-->
-		<div onclick="resetZoomMap()" class="zoombtn">RESET ZOOM</div>
+		<div onclick="resetZoomMap()" class="zoombtn">
+			<img id="reset-zoom" class="reset-zoom" src="ressources/icons/reset_zoom.png">
+		</div>
 		<div class="drawtool">
 			<div id="pencil-tool" onclick="handleDrawing()">
 				<img id="pencil" class="pencil" src="ressources/icons/Pencil.png">
@@ -31,8 +33,12 @@
 				<label>Size:</label>
 				<input id="draw-size" class="draw-size" onchange="setDrawSize(this)" type="number" min="1" max="10" value="3" step="1">
 			</div>
-			<!-- <div><img id="undo" class="undo" src=""></div> -->
-			<!-- <div><img id="redo" class="redo" src=""></div> -->
+			<div id="undo-tool" onclick="undo()" disabled>
+				<img class="undo" src="ressources/icons/circular-arrow.png">
+			</div>
+			<div id="redo-tool" onclick="redo()" disabled>
+				<img class="redo" src="ressources/icons/circular-arrow.png">
+			</div>
 			<div id="eraser-tool" onclick="clearCanvas()" disabled>
 				<img id="eraser" class="eraser" src="ressources/icons/eraser.png">
 			</div>
