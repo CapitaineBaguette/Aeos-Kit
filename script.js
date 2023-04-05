@@ -154,6 +154,7 @@ function addDrawingEvents() {
   });
 
   ElCanvas.addEventListener("mouseup", (e) => {
+    if (!drawingData.drawing) return;
     drawingData.drawing = false;
     if (drawingData.historyPosition < drawingData.history.length-1) {
       drawingData.history.splice(drawingData.historyPosition + 1);
@@ -161,7 +162,15 @@ function addDrawingEvents() {
     drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
     drawingData.historyPosition++;
   });
-  ElCanvas.addEventListener("mouseleave", (e) => drawingData.drawing = false);
+  ElCanvas.addEventListener("mouseleave", (e) => {
+    if (!drawingData.drawing) return;
+    drawingData.drawing = false;
+    if (drawingData.historyPosition < drawingData.history.length-1) {
+      drawingData.history.splice(drawingData.historyPosition + 1);
+    }
+    drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
+    drawingData.historyPosition++;
+  });
 
   ElCanvas.addEventListener("mousemove", (e) => {
     if(!drawingData.drawing) return;
