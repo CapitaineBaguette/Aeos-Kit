@@ -242,6 +242,7 @@ function moveAt(elem, x, y) {
 
 function dragCloneFromOrigin(e) {
   e.stopPropagation();
+  e.preventDefault();
   dragFromOrigin(e, true);
 }
 
@@ -250,6 +251,7 @@ function dragCloneFromOrigin(e) {
  */
 function dragFromOrigin(e, clone) {
   e.stopPropagation();
+  e.preventDefault();
   if (e.button === 2) {
     removeDragElement(e);
     return;
@@ -289,7 +291,6 @@ function dragFromOrigin(e, clone) {
   
   document.addEventListener("mousemove", dragMove);
   elem.addEventListener("mouseup", dragDrop);
-  elem.addEventListener("mouseleave", cancelDragAndDrop);
 }
 
 /**
@@ -297,6 +298,7 @@ function dragFromOrigin(e, clone) {
  */
 function dragMove(e) {
   e.stopPropagation();
+  e.preventDefault();
   moveAt(dragData.marker.element, e.pageX, e.pageY);
 }
 
@@ -305,6 +307,7 @@ function dragMove(e) {
  */
 function dragDrop(e) {
   e.stopPropagation();
+  e.preventDefault();
   const marker = dragData.marker;
   marker.element.style.pointerEvents = "none";
   const elemBelow = document.elementFromPoint(e.clientX, e.clientY);
@@ -356,7 +359,6 @@ function dragDrop(e) {
 
   document.removeEventListener("mousemove", dragMove, false);
   marker.element.removeEventListener("mouseup", dragDrop, false);
-  marker.element.removeEventListener("mouseleave", cancelDragAndDrop, false);
 
   if (!marker.dropped) {
     Markers.push(marker);
@@ -369,11 +371,10 @@ function dragDrop(e) {
  * Annule l'action de glisser-déposer d'un élément
  */
 function cancelDragAndDrop() {
-  document.removeEventListener("mousemove", dragMove, false);
-
   if (!dragData.marker?.element) return;
+
+  document.removeEventListener("mousemove", dragMove, false);
   dragData.marker.element.removeEventListener("mouseup", dragDrop, false);
-  dragData.marker.element.removeEventListener("mouseleave", cancelDragAndDrop, false);
 
   dragData.marker.element.classList.remove("dropped");
   dragData.marker.element.classList.remove("dragging");
@@ -395,6 +396,7 @@ function cancelDragAndDrop() {
  */
 function removeDragElement(e) {
   e.stopPropagation();
+  e.preventDefault();
 
   const markerIndex = Markers.findIndex(m => m.element.id === e.target.id);
   if (markerIndex === -1) return;
