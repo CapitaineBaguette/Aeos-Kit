@@ -10,12 +10,12 @@
 <body>
 
 	<!-- MAP BACKGROUND-->
-	<div id="map-container" class="map-container">
-		<img id="map" class="map" src="ressources/map_background/map.png" ondragover="onDragOver(event)" ondrop="onDrop(event)">
+	<div id="map-container" class="map-container" ondragover="onDragOver(event)" ondrop="onDrop(event)">
+		<img id="map" class="map" src="ressources/map_background/map.png">
 		<canvas id="canvas" class="canvas"></canvas>
-		<div id="markers"></div>
 	</div>
 
+	<!-- TOP TOLLBAR -->
 	<div class="btnholder">
 		<!-- RESET ZOOM BUTTON-->
 		<div onclick="resetZoomMap()" class="zoombtn">RESET ZOOM</div>
