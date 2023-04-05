@@ -592,9 +592,9 @@ p {
 }
 
 .bottom-middle-menu.closed {
-  -webkit-transform: translate(-50%, 100%);
-      -ms-transform: translate(-50%, 100%);
-          transform: translate(-50%, 100%);
+  -webkit-transform: translateY(100%);
+      -ms-transform: translateY(100%);
+          transform: translateY(100%);
 }
 
 .base-picks {
