@@ -367,7 +367,7 @@ function dragDrop(e) {
     return;
   }
   marker.element.classList.remove("dragging");
-  marker.element.classList.add("dropped");
+  
   if (elemDroppableBelow.id === "map-container") {
     ElMarkers.appendChild(marker.element);
     if (marker.clone) marker.parent = ElMarkers;
@@ -399,6 +399,9 @@ function dragDrop(e) {
     marker.element.removeEventListener("mousedown", dragFromOrigin, false);
     marker.element.removeEventListener("mousedown", dragCloneFromOrigin, false);
     marker.element.addEventListener("mousedown", cancelDragAndDrop);
+  } else {
+    cancelDragAndDrop();
+    return;
   }
 
   document.removeEventListener("mousemove", dragMove, false);
@@ -407,6 +410,7 @@ function dragDrop(e) {
   if (!marker.dropped) {
     Markers.push(marker);
   }
+  marker.element.classList.add("dropped");
   marker.dropped = true;
   dragData.marker = undefined;
 }
