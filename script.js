@@ -18,19 +18,18 @@ const drawingData = {
 }
 
 const dragData = {
-  clone: false,
-  pointX: 0,
-  pointY: 0,
-  dropped: false,
-  markerId: -1
+  marker: undefined
 }
 const Markers = [];
+
+let scale = 1;
 
 // ELEMENTS
 const ElMapContainer = document.getElementById("map-container");
 const ElMap = document.getElementById("map");
 const ElDiscordUsername = document.getElementById("discord-username");
 const ElDiscordTooltip = document.getElementById("discord-tooltip");
+const ElMarkers = document.getElementById("markers");
 
 const ElPurplePicks = document.getElementById("purple-picks");
 const ElPurpleAttackers = document.getElementById("purple-attackers");
@@ -188,149 +187,226 @@ function setDraggableElements() {
 
   for (const el of purpleDragElts) {
     el.id = `dragId-${INC_DRAGID}`;
-    el.setAttribute("draggable", "true");
-    el.addEventListener("dragstart", (event) => onDragStart(event));
-    
+    el.setAttribute("data-droppable", "true");
+    el.setAttribute("data-drop-item", "true");
+    el.addEventListener("mousedown", dragFromOrigin);
+
     INC_DRAGID++;
   }
 
   for (const el of orangeDragElts) {
     el.id = `dragId-${INC_DRAGID}`;
-    el.setAttribute("draggable", "true");
-    el.addEventListener("dragstart", (event) => onDragStart(event));
+    el.setAttribute("data-droppable", "true");
+    el.setAttribute("data-drop-item", "true");
+    el.addEventListener("mousedown", dragFromOrigin);
 
     INC_DRAGID++;
   }
 
   for (const el of neutralDragElts) {
     el.id = `dragId-${INC_DRAGID}`;
-    el.setAttribute("draggable", "true");
-    el.addEventListener("dragstart", (event) => onDragStart(event, true));
+    el.addEventListener("mousedown", dragCloneFromOrigin);
 
     INC_DRAGID++;
   }
 
   for (const el of baseDragElts) {
     el.id = `dragId-${INC_DRAGID}`;
-    el.setAttribute("draggable", "true");
-    el.addEventListener("dragstart", (event) => onDragStart(event, true));
+    el.addEventListener("mousedown", dragCloneFromOrigin);
 
     INC_DRAGID++;
   }
 
   for (const el of itemDragElts) {
     el.id = `dragId-${INC_DRAGID}`;
-    el.setAttribute("draggable", "true");
-    el.addEventListener("dragstart", (event) => onDragStart(event, true));
+    el.setAttribute("data-item", "true");
+    el.addEventListener("mousedown", dragCloneFromOrigin);
 
     INC_DRAGID++;
   }
 }
 
 /**
- * Cette fonction est appelée lorsque l'élément draggable n'est pas déposé sur la carte.
- * Au début du drag stocke l'information de clonage dans l'objet "dragData" 
- * et stocke l'identifiant de l'élément dans les données de transfert.
+ * Permet de déplacer un élément sur la page.
  */
-function onDragStart(e, clone) {
-  dragData.clone = clone;
-  e.dataTransfer.setData("text/plain", e.target.id);
+function moveAt(elem, x, y) {
+  if (elem.classList.contains("dropped")) {
+    elem.style.left = `${(x - zoomMapData.pointX) / zoomMapData.scale - elem.offsetWidth / 2}px`;
+    elem.style.top = `${(y - zoomMapData.pointY) / zoomMapData.scale - elem.offsetHeight / 2}px`;
+  } else {
+    elem.style.left = `${x - elem.offsetWidth / 2}px`;
+    elem.style.top = `${y - elem.offsetHeight / 2}px`;
+  }
+}
+
+
+function dragCloneFromOrigin(e) {
+  e.stopPropagation();
+  dragFromOrigin(e, true);
 }
 
 /**
- * Cette fonction est appelée lorsque l'élément draggable est déjà déposé sur la carte.
- * Stocke l'information que le marqueur est déjà sur la carte dans l'objet "dragData",
- * stocke l'index du marqueur dans le même objet
- * et stocke l'identifiant de l'élément dans les données de transfert.
+ * Gère le début du glisser-déposer.
  */
-function onMapDragStart(e, dropped, markerId) {
-  dragData.dropped = dropped;
-  dragData.markerId = markerId;
-  e.dataTransfer.setData("text/plain", e.target.id);
-}
+function dragFromOrigin(e, clone) {
+  e.stopPropagation();
+  if (e.button === 2) {
+    removeDragElement(e);
+    return;
+  }
 
-// Signale que l'élément est une cible valide pour le glisser-déposer
-function onDragOver(e) {
-  e.preventDefault();
-}
-
-// Relâche l'élément draggable
-function onDrop(e) {
-  // Récupère l'ID de l'élément draggable depuis les données de transfert
-  const id = e.dataTransfer.getData("text");
-  // Récupère l'élément draggable à partir de l'ID
-  let elem = document.getElementById(id);
-  // Crée un objet `marker` pour stocker les informations de l'élément draggable
+  const elem = clone ? e.target.cloneNode(true) : e.target;
   const marker = { 
-    element: undefined, 
+    element: elem, 
     parent: undefined, 
     pointX: 0,
     pointY: 0,
-    clone: dragData.clone
-  };
-
-  // Si l'élément draggable n'a pas déjà été déposé sur la carte
-  if (!dragData.dropped) {
-    if (dragData.clone) { // Clone l'élément et générer un nouvel ID
-      elem = elem.cloneNode(true);
-      elem.id = `dragId-${INC_DRAGID}`;
+    clone: clone,
+    dropped: false
+  }
   
-      INC_DRAGID++;
-    }
-  
-    // Enregistre l'élément draggable dans l'objet `marker` et l'ajoute aux marqueurs
-    marker.element = elem; 
-    marker.parent = elem.parentElement; 
-    marker.pointX = e.offsetX;
-    marker.pointY = e.offsetY;
-    Markers.push(marker);
-
-    // Si l'élément n'a pas été cloné, le supprime de sa position initiale
-    if (!dragData.clone) elem.remove();
-  
-    // Gestion et positionnement de l'élément draggable
-    elem.classList.add("dragged");
-    const index = Markers.length-1;
-    elem.ondragstart = (event) => onMapDragStart(event, true, index);
-    ElMapContainer.parentElement.appendChild(elem);
-    setDragElemTransform(marker);
+  if (clone) {
+    elem.id = `dragId-${INC_DRAGID}`;
+    INC_DRAGID++;
+    e.target.parentElement.appendChild(elem);
+    elem.addEventListener("mousedown", dragFromOrigin);
   } else {
-    // Gestion et positionnement de l'élément draggable
-    Markers[dragData.markerId].pointX = e.offsetX;
-    Markers[dragData.markerId].pointY = e.offsetY;
-    setDragElemTransform(Markers[dragData.markerId]);
+    marker.parent = elem.parentElement;
   }
 
-  elem.onmouseup = removeDragElement;
+  if (elem.classList.contains("dropped")) {
+    dragData.marker = Markers.find(m => m.element.id === elem.id);
+  } else {
+    dragData.marker = marker;
+  }
+  
+  ElMapContainer.setAttribute("data-droppable", "true");
 
-  dragData.clone = false;
-  dragData.dropped = false;
+  // Commence à faire bouger l'élement sans le faire sortir de sa zone d'origine
+  elem.classList.add("dragging");
+
+  moveAt(elem, e.pageX, e.pageY);
+  
+  document.addEventListener("mousemove", dragMove);
+  elem.addEventListener("mouseup", dragDrop);
+  elem.addEventListener("mouseleave", cancelDragAndDrop);
+}
+
+/**
+ * Gère le déplacement de l'élément en cours de glisser-déposer
+ */
+function dragMove(e) {
+  e.stopPropagation();
+  moveAt(dragData.marker.element, e.pageX, e.pageY);
+}
+
+/**
+ * Gère le relâchement de l'élément en cours de glisser-déposer
+ */
+function dragDrop(e) {
+  e.stopPropagation();
+  const marker = dragData.marker;
+  marker.element.style.pointerEvents = "none";
+  const elemBelow = document.elementFromPoint(e.clientX, e.clientY);
+  marker.element.style.pointerEvents = "initial";
+  
+  if (!elemBelow) {
+    cancelDragAndDrop();
+    return;
+  }
+  const elemDroppableBelow = elemBelow.closest("[data-droppable]");
+  if (!elemDroppableBelow) {
+    cancelDragAndDrop();
+    return;
+  }
+  marker.element.classList.remove("dragging");
+  marker.element.classList.add("dropped");
+  if (elemDroppableBelow.id === "map-container") {
+    ElMarkers.appendChild(marker.element);
+    if (marker.clone) marker.parent = ElMarkers;
+
+    marker.pointX = e.pageX;
+    marker.pointY = e.pageY;
+    setDragElemTransform(marker);
+  } else if (marker.element.getAttribute("data-item")
+  &&  elemDroppableBelow.getAttribute("data-drop-item")) 
+  {
+    elemDroppableBelow.appendChild(marker.element);
+    if (marker.element.classList.contains("hitem-mon")) {
+      const items = elemDroppableBelow.getElementsByClassName("hitem-mon");
+      if (items.length > 3) {
+        cancelDragAndDrop();
+        return;
+      }
+      marker.element.style.left = `${3.7 - 3.7 * (items.length-1)}vh`;
+      marker.element.style.top = "100%";
+    } else if (marker.element.classList.contains("bitem-mon")) {
+      const items = elemDroppableBelow.getElementsByClassName("bitem-mon");
+      if (items.length > 1) {
+        cancelDragAndDrop();
+        return;
+      }
+      marker.element.style.left = "100%";
+      marker.element.style.top = "-50%";
+    }
+    marker.element.removeEventListener("mousedown", dragFromOrigin, false);
+    marker.element.removeEventListener("mousedown", dragCloneFromOrigin, false);
+    marker.element.addEventListener("mousedown", cancelDragAndDrop);
+  }
+
+  document.removeEventListener("mousemove", dragMove, false);
+  marker.element.removeEventListener("mouseup", dragDrop, false);
+  marker.element.removeEventListener("mouseleave", cancelDragAndDrop, false);
+
+  if (!marker.dropped) {
+    Markers.push(marker);
+  }
+  marker.dropped = true;
+  dragData.marker = undefined;
+}
+
+/**
+ * Annule l'action de glisser-déposer d'un élément
+ */
+function cancelDragAndDrop() {
+  document.removeEventListener("mousemove", dragMove, false);
+
+  if (!dragData.marker?.element) return;
+  dragData.marker.element.removeEventListener("mouseup", dragDrop, false);
+  dragData.marker.element.removeEventListener("mouseleave", cancelDragAndDrop, false);
+
+  dragData.marker.element.classList.remove("dropped");
+  dragData.marker.element.classList.remove("dragging");
+  
+  dragData.marker.element.remove();
+  if (dragData.marker.parent) {
+    dragData.marker.parent.appendChild(dragData.marker.element);
+  }
+ 
+  const markerIndex = Markers.findIndex(m => m.element.id === dragData.marker?.element.id);
+  dragData.marker = undefined;
+  if (markerIndex === -1) return;
+  const marker = Markers.splice(markerIndex, 1)[0];
+  if (!marker) return;
 }
 
 /**
  * Supprime un élément lorsqu'un clic droit est effectué sur celui-ci.
  */
 function removeDragElement(e) {
-  e.preventDefault();
-  if (e.button !== 2) return;
-  
+  e.stopPropagation();
+
   const markerIndex = Markers.findIndex(m => m.element.id === e.target.id);
+  if (markerIndex === -1) return;
   const marker = Markers.splice(markerIndex, 1)[0];
-  marker.element.classList.remove("dragged");
-  marker.element.style.scale = 1;
+  if (!marker) return;
+
+  marker.element.classList.remove("dragging");
+  marker.element.classList.remove("dropped");
   marker.element.remove();
 
-  dragData.clone = false;
-  dragData.pointX = 0;
-  dragData.pointY = 0;
-  dragData.dropped = false;
-  dragData.markerId = -1;
-
-  if (marker.parent) {
+  if (!marker.clone) {
     marker.parent.appendChild(marker.element);
-    marker.element.ondragstart = (event) => onDragStart(event);
-  } else {
-    marker.element.ondragstart = (event) => onDragStart(event, true);
   }
 }
 
@@ -442,6 +518,7 @@ function onMapMouseDown(e) {
  * Désactive le défilement de la carte
  */
 function onMapMouseUp(e) {
+  e.preventDefault();
   zoomMapData.panning = false;
 }
 
@@ -476,27 +553,18 @@ function onMapMouseWheel(e) {
 }
 
 /**
- * Met à jour la position et l'échelle de tous les marqueurs sur la carte. 
- * Elle définit la transformation CSS pour le conteneur de la carte 
- * et calcule la position des marqueurs en fonction de la nouvelle échelle et du nouvel emplacement de la carte.
+ * Met à jour la position et l'échelle de tous les marqueurs sur la carte.
  */
 function setMapTransform() {
   ElMapContainer.style.transform = `translate(${zoomMapData.pointX}px, ${zoomMapData.pointY}px) scale(${zoomMapData.scale})`;
-
-  for (const marker of Markers) {
-    marker.element.style.scale = zoomMapData.scale;
-    marker.element.style.left = `${zoomMapData.pointX + marker.pointX * zoomMapData.scale - marker.element.offsetWidth / 2}px`;
-    marker.element.style.top = `${zoomMapData.pointY + marker.pointY * zoomMapData.scale - marker.element.offsetHeight / 2}px`;
-  }
 }
 
 /**
  * Met à jour la position et l'échelle d'un marqueur spécifique lorsqu'il est en cours de déplacement.
  */
 function setDragElemTransform(marker) {
-  marker.element.style.scale = zoomMapData.scale;
-  marker.element.style.left = `${zoomMapData.pointX + marker.pointX * zoomMapData.scale - marker.element.offsetWidth / 2}px`;
-  marker.element.style.top = `${zoomMapData.pointY + marker.pointY * zoomMapData.scale - marker.element.offsetHeight / 2}px`;
+  marker.element.style.left = `${(marker.pointX - zoomMapData.pointX) / zoomMapData.scale - marker.element.offsetWidth / 2}px`;
+  marker.element.style.top = `${(marker.pointY - zoomMapData.pointY) / zoomMapData.scale - marker.element.offsetHeight / 2}px`;
 }
 
 /**

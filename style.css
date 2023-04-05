@@ -131,8 +131,16 @@ p {
   pointer-events: initial;
 }
 
-.dragged {
+
+/* Drag and drop */
+.dropped {
   position: absolute;
+  overflow: visible;
+}
+
+.dragging {
+  position: fixed;
+  z-index: 1000;
 }
 
 
@@ -467,10 +475,7 @@ p {
   width: 25vw;
   height: 12vh;
   bottom: 0;
-  left: 50vw;
-  -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
+  left: 37.5vw;
 }
 
 .right-menu .orange-side {
