@@ -81,9 +81,8 @@ p {
 }
 
 .base-mon {
-  border: 2px solid #1e1e20;
-  border-radius: 50%;
-  background-color: #1b17316e;
+  width: 5.5vh!important;
+  height: 5.5vh!important;
 }
 
 .bitem-mon {
@@ -634,7 +633,7 @@ p {
 /* Draggables */
 .draggable-items {
   width: 100%;
-  overflow: auto;
+  overflow-x: scroll;
   white-space: nowrap;
   grid-template-rows: repeat(2, 1fr);
   grid-auto-columns: calc(6vh + 3px);
