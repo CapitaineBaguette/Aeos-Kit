@@ -145,15 +145,19 @@ function handleDrawing() {
  */
 function addDrawingEvents() {
   drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
-  ElCanvas.addEventListener("mousedown", (e) => {
+  document.addEventListener("mousedown", onStartDraw);
+
+  function onStartDraw(e) {
     e.preventDefault();
     if (e.button !== 0) return;
     drawingData.drawing = true;
     drawingData.lastPointX = (e.clientX - zoomMapData.pointX) / zoomMapData.scale;
     drawingData.lastPointY = (e.clientY - zoomMapData.pointY) / zoomMapData.scale;
-  });
+    document.addEventListener("mousemove", draw);
+    document.addEventListener("mouseup", onEndDraw);
+  }
 
-  ElCanvas.addEventListener("mouseup", (e) => {
+  function onEndDraw(e) {
     if (!drawingData.drawing) return;
     drawingData.drawing = false;
     if (drawingData.historyPosition < drawingData.history.length-1) {
@@ -161,18 +165,11 @@ function addDrawingEvents() {
     }
     drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
     drawingData.historyPosition++;
-  });
-  ElCanvas.addEventListener("mouseleave", (e) => {
-    if (!drawingData.drawing) return;
-    drawingData.drawing = false;
-    if (drawingData.historyPosition < drawingData.history.length-1) {
-      drawingData.history.splice(drawingData.historyPosition + 1);
-    }
-    drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
-    drawingData.historyPosition++;
-  });
+    document.removeEventListener("mousemove", draw, false);
+    document.removeEventListener("mouseup", onEndDraw, false);
+  }
 
-  ElCanvas.addEventListener("mousemove", (e) => {
+  function draw(e) {
     if(!drawingData.drawing) return;
 
     // Calcul de la position du point actuel de la souris
@@ -201,7 +198,7 @@ function addDrawingEvents() {
     // Enregistre la position actuelle de la souris comme étant la position de départ pour le prochain trait à dessiner
     drawingData.lastPointX = pointX;
     drawingData.lastPointY = pointY;
-  });
+  }
 }
 
 function redo() {
