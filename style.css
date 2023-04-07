@@ -151,7 +151,9 @@ p {
 	position: fixed;
 	top: 0;
 	left: 50%;
-	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	    -ms-transform: translateX(-50%);
+	        transform: translateX(-50%);
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -224,7 +226,9 @@ p {
 }
 
 .redo {
-  transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+      -ms-transform: scaleX(-1);
+          transform: scaleX(-1);
 }
 
 .pencil:hover,
@@ -276,6 +280,7 @@ p {
   width: 7vw;
   border-radius: 5px 5px 0 0;
   position: fixed;
+  display: -ms-grid;
   display: grid;
   grid-auto-flow: column;
   padding: 5px 2px 0px 2px;
@@ -285,8 +290,12 @@ p {
 }
 
 .links > * {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .discord, 
@@ -335,18 +344,30 @@ p {
 /* Category */
 .purple-side.category {
   width: 20vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   border-top: 2px solid #2d2d2d7a;
   border-radius: 0px 5px 5px 0px;
 }
 
 .orange-side.category {
   width: 20vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   border-top: 2px solid #2d2d2d7a;
   -webkit-box-orient: horizontal;
   border-radius: 5px 0px 0px 5px;
@@ -354,27 +375,48 @@ p {
 
 .neutral-side.category {
   height: 15vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   border-left: 2px solid #2d2d2d7a;
   border-right: 2px solid #2d2d2d7a;
 }
 
 .base-side.category {
   height: 15vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   border-left: 2px solid #2d2d2d7a;
   border-right: 2px solid #2d2d2d7a;
 }
 
 .item-side.category {
   height: 12vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   border-left: 2px solid #2d2d2d7a;
   border-right: 2px solid #2d2d2d7a;
 }
@@ -410,53 +452,81 @@ p {
 }
 
 .purple-side .category-attacker {
+  background: -webkit-gradient(linear, left top, right top, from(#d23927), to(#f37038));
+  background: -o-linear-gradient(left, #d23927, #f37038);
   background: linear-gradient(90deg, #d23927, #f37038);
 }
 .orange-side .category-attacker {
+  background: -webkit-gradient(linear, right top, left top, from(#d23927), to(#f37038));
+  background: -o-linear-gradient(right, #d23927, #f37038);
   background: linear-gradient(270deg, #d23927, #f37038);
 }
 
 .purple-side .category-defender {
+  background: -webkit-gradient(linear, left top, right top, from(#3ca90e), to(#baf565));
+  background: -o-linear-gradient(left, #3ca90e, #baf565);
   background: linear-gradient(90deg, #3ca90e, #baf565);
 }
 .orange-side .category-defender {
+  background: -webkit-gradient(linear, right top, left top, from(#3ca90e), to(#baf565));
+  background: -o-linear-gradient(right, #3ca90e, #baf565);
   background: linear-gradient(270deg, #3ca90e, #baf565);
 }
 
 .purple-side .category-supporter {
+  background: -webkit-gradient(linear, left top, right top, from(#be9100), to(#fcc834));
+  background: -o-linear-gradient(left, #be9100, #fcc834);
   background: linear-gradient(90deg, #be9100, #fcc834);
 }
 .orange-side .category-supporter {
+  background: -webkit-gradient(linear, right top, left top, from(#be9100), to(#fcc834));
+  background: -o-linear-gradient(right, #be9100, #fcc834);
   background: linear-gradient(270deg, #be9100, #fcc834);
 }
 
 .purple-side .category-allrounder {
+  background: -webkit-gradient(linear, left top, right top, from(#8a279e), to(#d766da));
+  background: -o-linear-gradient(left, #8a279e, #d766da);
   background: linear-gradient(90deg, #8a279e, #d766da);
 }
 .orange-side .category-allrounder {
+  background: -webkit-gradient(linear, right top, left top, from(#8a279e), to(#d766da));
+  background: -o-linear-gradient(right, #8a279e, #d766da);
   background: linear-gradient(270deg, #8a279e, #d766da);
 }
 
 .purple-side .category-speedster {
+  background: -webkit-gradient(linear, left top, right top, from(#165ec0), to(#32c3f2));
+  background: -o-linear-gradient(left, #165ec0, #32c3f2);
   background: linear-gradient(90deg, #165ec0, #32c3f2);
 }
 .orange-side .category-speedster {
+  background: -webkit-gradient(linear, right top, left top, from(#165ec0), to(#32c3f2));
+  background: -o-linear-gradient(right, #165ec0, #32c3f2);
   background: linear-gradient(270deg, #165ec0, #32c3f2);
 }
 
 .neutral-side .category-neutral {
+  background: -webkit-gradient(linear, left top, right top, from(#464646), to(#6e6e6e));
+  background: -o-linear-gradient(left, #464646, #6e6e6e);
   background: linear-gradient(90deg, #464646, #6e6e6e);
 }
 
 .base-side .category-misc {
+  background: -webkit-gradient(linear, left top, right top, from(#464646), to(#6e6e6e));
+  background: -o-linear-gradient(left, #464646, #6e6e6e);
   background: linear-gradient(90deg, #464646, #6e6e6e);
 }
 
 .item-side .category-hitem {
+  background: -webkit-gradient(linear, left top, right top, from(#464646), to(#6e6e6e));
+  background: -o-linear-gradient(left, #464646, #6e6e6e);
   background: linear-gradient(90deg, #464646, #6e6e6e);
 }
 
 .item-side .category-bitem {
+  background: -webkit-gradient(linear, left top, right top, from(#464646), to(#6e6e6e));
+  background: -o-linear-gradient(left, #464646, #6e6e6e);
   background: linear-gradient(90deg, #464646, #6e6e6e);
 }
 
@@ -539,6 +609,8 @@ p {
           transform: translate(100%, 50%);
   border-radius: 0px 10px 10px 0px;
   padding: 1vw 1vh 1vw 20vw;
+  background: -webkit-gradient(linear, right top, left top, from(#5a4aade1), color-stop(5%, #5a4aade1), color-stop(15%, #00000000));
+  background: -o-linear-gradient(right, #5a4aade1 0%, #5a4aade1 5%, #00000000 15%);
   background: linear-gradient(270deg, #5a4aade1 0%, #5a4aade1 5%, #00000000 15%);
 }
 
@@ -550,6 +622,8 @@ p {
           transform: translate(-100%, 50%);
   border-radius: 10px 0px 0px 10px;
   padding: 1vw 20vw 1vw 1vh;
+  background: -webkit-gradient(linear, left top, right top, from(#76453cdc), color-stop(5%, #76453cdc), color-stop(15%, #00000000));
+  background: -o-linear-gradient(left, #76453cdc 0%, #76453cdc 5%, #00000000 15%);
   background: linear-gradient(90deg, #76453cdc 0%, #76453cdc 5%, #00000000 15%);
 }
 
@@ -561,6 +635,8 @@ p {
           transform: translate(-50%, -100%);
   border-radius: 10px 10px 0px 0px;
   padding: 1vh 1vw 15vh 1vw;
+  background: -webkit-gradient(linear, left top, left bottom, from(#7c7776de), color-stop(20%, #7c7776de), color-stop(50%, #00000000));
+  background: -o-linear-gradient(top, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
   background: linear-gradient(180deg, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
 }
 
@@ -572,6 +648,8 @@ p {
           transform: translate(-50%, -100%);
   border-radius: 10px 10px 0px 0px;
   padding: 1vh 1vw 15vh 1vw;
+  background: -webkit-gradient(linear, left top, left bottom, from(#7c7776de), color-stop(20%, #7c7776de), color-stop(50%, #00000000));
+  background: -o-linear-gradient(top, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
   background: linear-gradient(180deg, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
 }
 
@@ -583,6 +661,8 @@ p {
           transform: translate(-50%, -100%);
   border-radius: 10px 10px 0px 0px;
   padding: 1vh 1vw 12vh 1vw;
+  background: -webkit-gradient(linear, left top, left bottom, from(#7c7776de), color-stop(20%, #7c7776de), color-stop(50%, #00000000));
+  background: -o-linear-gradient(top, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
   background: linear-gradient(180deg, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
 }
 
@@ -625,6 +705,7 @@ p {
 }
 
 .base-picks {
+  display: -ms-grid;
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 50%;
@@ -635,11 +716,15 @@ p {
   width: 100%;
   overflow-x: scroll;
   white-space: nowrap;
+  -ms-grid-rows: 1fr 3px 1fr;
   grid-template-rows: repeat(2, 1fr);
   grid-auto-columns: calc(6vh + 3px);
+  display: -ms-grid;
   display: grid;
   grid-auto-flow: column;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 3px;
 }
 
@@ -668,8 +753,13 @@ p {
 }
 
 [data-drop-item] {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .draggable .hitem-mon:nth-of-type(1) {
@@ -686,19 +776,6 @@ p {
   left: -3.7vh;
   top: 100%;
 }
-
-/* .draggable .hitem-mon:not(.bitem-mon) {
-  left: 3.7vh;
-  top: 100%;
-}
-.draggable .hitem-mon:not(.bitem-mon):nth-of-type(2) + .hitem-mon {
-  left: 0;
-  top: 100%;
-}
-.draggable .hitem-mon:not(.bitem-mon):nth-of-type(3) + .hitem-mon {
-  left: -3.7vh;
-  top: 100%;
-} */
 
 .draggable .bitem-mon {
   left: 100%;
