@@ -343,7 +343,6 @@ function dragFromOrigin(e, clone) {
 function dragMove(e) {
   e.stopPropagation();
   e.preventDefault();
-  console.log("he")
   moveAt(dragData.marker.element, e.pageX, e.pageY);
 }
 
@@ -371,8 +370,6 @@ function dragDrop(e) {
   
   if (elemDroppableBelow.id === "map-container") {
     ElMarkers.appendChild(marker.element);
-    if (marker.clone) marker.parent = ElMarkers;
-
     marker.pointX = e.pageX;
     marker.pointY = e.pageY;
     setDragElemTransform(marker);
@@ -401,7 +398,6 @@ function dragDrop(e) {
     marker.element.removeEventListener("mousedown", dragCloneFromOrigin, false);
     marker.element.addEventListener("mousedown", cancelDragAndDrop);
   } else {
-    
     cancelDragAndDrop();
     return;
   }
@@ -429,6 +425,7 @@ function cancelDragAndDrop() {
   dragData.marker.element.classList.remove("dropped");
   dragData.marker.element.classList.remove("dragging");
   
+  console.log('b', dragData.marker.parent)
   dragData.marker.element.remove();
   if (dragData.marker.parent) {
     dragData.marker.parent.appendChild(dragData.marker.element);
