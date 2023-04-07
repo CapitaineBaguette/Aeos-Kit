@@ -158,7 +158,7 @@ function onStartDraw(e) {
 
 function onEndDraw(e) {
   if (!drawingData.drawing) return;
-  if (e.target.id !== "canvas") return;
+  
   drawingData.drawing = false;
   if (drawingData.historyPosition < drawingData.history.length-1) {
     drawingData.history.splice(drawingData.historyPosition + 1);
