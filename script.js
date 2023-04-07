@@ -64,7 +64,8 @@ const ElModalHelp = document.getElementById("modal-help");
 /**
  * Fonction d'initialisation
  */
-(() => {
+
+window.onload = () => {
   initCanvas();
   copyPurpleToOrangePicks();
   addZoomEvents();
@@ -74,7 +75,7 @@ const ElModalHelp = document.getElementById("modal-help");
   setDrawColor(ElDrawColor);
   setDrawSize(ElDrawSize);
   document.addEventListener("contextmenu", event => event.preventDefault());
-})();
+};
 
 /**
  * Initialise le canvas en définissant sa largeur et sa hauteur en fonction de la taille de l'élément de la carte.
