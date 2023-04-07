@@ -295,6 +295,12 @@ function dragFromOrigin(e, clone) {
   }
 
   const elem = clone ? e.target.cloneNode(true) : e.target;
+
+  if (elem.parentElement?.getAttribute("data-drop-item")) {
+    removeDragElement(e);
+    return;
+  }
+
   const marker = { 
     element: elem, 
     parent: undefined, 
@@ -326,6 +332,7 @@ function dragFromOrigin(e, clone) {
 
   moveAt(elem, e.pageX, e.pageY);
   
+  
   document.addEventListener("mousemove", dragMove);
   elem.addEventListener("mouseup", dragDrop);
 }
@@ -336,6 +343,7 @@ function dragFromOrigin(e, clone) {
 function dragMove(e) {
   e.stopPropagation();
   e.preventDefault();
+  console.log("he")
   moveAt(dragData.marker.element, e.pageX, e.pageY);
 }
 
@@ -349,7 +357,7 @@ function dragDrop(e) {
   marker.element.style.pointerEvents = "none";
   const elemBelow = document.elementFromPoint(e.clientX, e.clientY);
   marker.element.style.pointerEvents = "initial";
-  
+
   if (!elemBelow) {
     cancelDragAndDrop();
     return;
@@ -393,6 +401,7 @@ function dragDrop(e) {
     marker.element.removeEventListener("mousedown", dragCloneFromOrigin, false);
     marker.element.addEventListener("mousedown", cancelDragAndDrop);
   } else {
+    
     cancelDragAndDrop();
     return;
   }
@@ -471,8 +480,6 @@ function removeDragElement(e) {
     Markers.splice(markerIndex, 1)[0];
     child.remove();
   }
-
-  console.log(Markers)
 }
 
 /**
