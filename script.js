@@ -33,6 +33,10 @@ const ElDiscordUsername = document.getElementById("discord-username");
 const ElDiscordTooltip = document.getElementById("discord-tooltip");
 const ElMarkers = document.getElementById("markers");
 
+const ElDecTime = document.getElementById("dec-time");
+const ElTime = document.getElementById("time");
+const ElIncTime = document.getElementById("inc-time");
+
 const ElPurplePicks = document.getElementById("purple-picks");
 const ElPurpleAttackers = document.getElementById("purple-attackers");
 const ElPurpleDefenders = document.getElementById("purple-defenders");
@@ -67,6 +71,7 @@ const ElModalHelp = document.getElementById("modal-help");
 
 window.onload = () => {
   initCanvas();
+  addTime(0);
   copyPurpleToOrangePicks();
   addZoomEvents();
   setDraggableElements();
@@ -76,6 +81,38 @@ window.onload = () => {
   setDrawSize(ElDrawSize);
   document.addEventListener("contextmenu", event => event.preventDefault());
 };
+
+function addTime(t) {
+  let time = parseInt(ElTime.getAttribute("data-time"));
+  time += t;
+
+  if (time >= 600) {
+    time = 600;
+    ElIncTime.classList.add("hide");
+  } else {
+    ElIncTime.classList.remove("hide");
+  }
+  if (time <= 0) {
+    time = 0;
+    ElDecTime.classList.add("hide");
+  } else {
+    ElDecTime.classList.remove("hide");
+  }
+
+  let m = Math.floor(time / 60);
+	let s = time % 60;
+
+	if (m < 10) m = `0${m}`;
+	if (s < 10) s = `0${s}`;
+	
+	ElTime.innerText = `${m}:${s}`;
+  ElTime.setAttribute("data-time", time);
+}
+
+function wheelTime(e) {
+  const delta = (e.wheelDelta ? e.wheelDelta : -e.deltaY);
+  (delta > 0) ? addTime(+1) : addTime(-1);
+}
 
 /**
  * Initialise le canvas en définissant sa largeur et sa hauteur en fonction de la taille de l'élément de la carte.

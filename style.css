@@ -144,16 +144,58 @@ p {
 
 
 /* Top Buttons */
+.top-menu {
+  position: fixed;
+  display: grid;
+  grid-auto-flow: column;
+  justify-items: end;
+  width: 100vw;
+  grid-template-columns: auto min-content auto;
+}
+
+.timer {
+  height: 40px;
+  border-radius: 0 0 0 5px;
+  background: #0000008a;
+  font-size: xx-large;
+  font-weight: bold;
+  text-shadow: 2px 2px 1px black, 2px 1px 1px black;
+  text-align: center;
+  display: grid;
+  grid-auto-flow: column;
+}
+
+.timer > * {
+  margin: 5px;
+}
+
+.time {
+  position: relative;
+}
+
+.time:hover {
+  background: linear-gradient(90deg, #8473fd 22%, #e4825c 23%, #e4825c 46%, #8473fd 47%, #8473fd 57%, #e4825c 58%, #e4825c 80%, #8473fd 80%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 1));
+}
+
+.dec-time:hover {
+  color: #8473fd;
+  cursor: pointer;
+}
+
+.inc-time:hover {
+  color: #e4825c;
+  cursor: pointer;
+}
+
 .btnholder {
   background: #0000008a;
 	border-radius: 0 0 25% 25%;
   padding: 4px;
-	position: fixed;
-	top: 0;
-	left: 50%;
-	-webkit-transform: translateX(-50%);
-	    -ms-transform: translateX(-50%);
-	        transform: translateX(-50%);
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -304,7 +346,9 @@ p {
   height: 1.3vw;
 }
 
-
+.help {
+  cursor: pointer;
+}
 
 /* Tooltips */
 .tooltip .tooltiptext {
@@ -740,7 +784,7 @@ p {
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-  cursor: pointer;
+  cursor: grab;
   display: inline-block;
 }
 
@@ -992,7 +1036,12 @@ p {
 }
 
 .img-modal.dot-size {
-  width: 20vh;
+  width: 10vh;
+  max-width: 4vw;
+}
+.img-modal.timer-help {
+  width: 15vh;
+  max-width: 6vw;
 }
 
 .modal-text li.li-img {
