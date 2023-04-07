@@ -58,6 +58,8 @@ const Ctx = ElCanvas.getContext("2d");
 const ElDrawColor = document.getElementById("draw-color");
 const ElDrawSize = document.getElementById("draw-size");
 
+const ElModalHelp = document.getElementById("modal-help");
+
 
 /**
  * Fonction d'initialisation
@@ -677,4 +679,26 @@ function addScrollEvents() {
 function onScrollY(e, container) {
   e.preventDefault();
   container.scrollLeft += e.deltaY;
+}
+
+function openHelp() {
+  ElModalHelp.classList.remove("closed");
+}
+
+function closeHelp() {
+  ElModalHelp.classList.add("closed");
+}
+
+function setLang(l) {
+  ElModalHelp.classList.remove("lang-en");
+  ElModalHelp.classList.remove("lang-fr");
+  ElModalHelp.classList.add(l);
+}
+
+function setSelected(elem) {
+  const parent = elem.parentElement;
+  for (const child of parent.children) {
+    if (child.classList.contains("selected")) child.classList.remove("selected");
+  }
+  elem.classList.add("selected");
 }
