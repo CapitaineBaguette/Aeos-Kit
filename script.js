@@ -424,6 +424,16 @@ function cancelDragAndDrop() {
   if (dragData.marker.parent) {
     dragData.marker.parent.appendChild(dragData.marker.element);
   }
+
+  const childs = [];
+  for (const child of dragData.marker.element.children) {
+    childs.push(child);
+  }
+  for (const child of childs) {
+    const markerIndex = Markers.findIndex(m => m.element.id === child.id);
+    Markers.splice(markerIndex, 1)[0];
+    child.remove();
+  }
  
   const markerIndex = Markers.findIndex(m => m.element.id === dragData.marker?.element.id);
   dragData.marker = undefined;
@@ -451,6 +461,18 @@ function removeDragElement(e) {
   if (!marker.clone) {
     marker.parent.appendChild(marker.element);
   }
+
+  const childs = [];
+  for (const child of marker.element.children) {
+    childs.push(child);
+  }
+  for (const child of childs) {
+    const markerIndex = Markers.findIndex(m => m.element.id === child.id);
+    Markers.splice(markerIndex, 1)[0];
+    child.remove();
+  }
+
+  console.log(Markers)
 }
 
 /**
