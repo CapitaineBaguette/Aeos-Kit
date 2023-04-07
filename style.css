@@ -385,6 +385,14 @@ p {
   cursor: pointer;
 }
 
+.tooltip-item {
+  position: fixed;
+  background-color: #555;
+  padding: 5px;
+  border-radius: 6px;
+  color: #fff;
+}
+
 /* Category */
 .purple-side.category {
   width: 20vw;

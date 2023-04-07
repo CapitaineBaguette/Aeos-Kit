@@ -20,7 +20,9 @@ const drawingData = {
 }
 
 const dragData = {
-  marker: undefined
+  marker: undefined,
+  mouseover: null,
+  mouseup: null
 }
 const Markers = [];
 
@@ -76,11 +78,46 @@ window.onload = () => {
   addZoomEvents();
   setDraggableElements();
   addScrollEvents();
+
+  initHoverText();
   
   setDrawColor(ElDrawColor);
   setDrawSize(ElDrawSize);
   document.addEventListener("contextmenu", event => event.preventDefault());
 };
+
+function initHoverText() {
+  const elements = document.getElementsByClassName("draggable");
+  for (const elem of elements) {
+    const bckImg = elem.style.backgroundImage;
+    const filename = bckImg.match(/\/([^/]+)\.[^/.]+$/)[1].replace(/[_-]/g, ' ');
+    const result = filename.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
+    let tooltipTimerId;
+
+    elem.onmouseover = () => {
+      tooltipTimerId = setTimeout(() => {
+        const tooltip = document.createElement("div");
+        tooltip.id = "tooltip-item";
+        tooltip.classList.add("tooltip-item");
+        tooltip.innerText = result;
+        document.body.appendChild(tooltip);
+  
+        const rect = elem.getBoundingClientRect();
+        tooltip.style.top = rect.top - tooltip.offsetHeight + "px";
+        tooltip.style.left = rect.left + rect.width / 2 - tooltip.offsetWidth / 2 + "px";
+      }, 1000);
+      elem.setAttribute("data-tooltip-timer-id", tooltipTimerId);
+    };
+
+    elem.onmouseout = () => {
+      clearTimeout(tooltipTimerId);
+
+      const tooltip = document.getElementById("tooltip-item");
+      tooltip?.parentNode.removeChild(tooltip);
+    };
+  }
+}
 
 function addTime(t) {
   let time = parseInt(ElTime.getAttribute("data-time"));
@@ -347,6 +384,13 @@ function dragFromOrigin(e, clone) {
     return;
   }
 
+  // Gère la suppression du tooltip de l'élément
+  dragData.onmouseover = elem.onmouseover;
+  dragData.onmouseout = elem.onmouseout;
+  elem.onmouseout();
+  elem.onmouseover = null;
+  elem.onmouseout = null;
+
   const marker = { 
     element: elem, 
     parent: undefined, 
@@ -401,6 +445,10 @@ function dragDrop(e) {
   marker.element.style.pointerEvents = "none";
   const elemBelow = document.elementFromPoint(e.clientX, e.clientY);
   marker.element.style.pointerEvents = "initial";
+  
+  // Gère la restoration du tooltip de l'élément
+  marker.element.onmouseover = dragData.onmouseover;
+  marker.element.onmouseout = dragData.onmouseout;
 
   if (!elemBelow) {
     cancelDragAndDrop();
