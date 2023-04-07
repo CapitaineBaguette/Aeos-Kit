@@ -376,23 +376,30 @@ function dragDrop(e) {
   } else if (marker.element.getAttribute("data-item")
   &&  elemDroppableBelow.getAttribute("data-drop-item")) 
   {
-    elemDroppableBelow.appendChild(marker.element);
     if (marker.element.classList.contains("hitem-mon")) {
       const items = elemDroppableBelow.getElementsByClassName("hitem-mon");
       if (items.length > 3) {
         cancelDragAndDrop();
         return;
       }
-      marker.element.style.left = `${3.7 - 3.7 * (items.length-1)}vh`;
-      marker.element.style.top = "100%";
+      marker.element.style.left = null;
+      marker.element.style.top = null;
+
+      const bitems = elemDroppableBelow.querySelector(".bitem-mon");
+      if (bitems) {
+        elemDroppableBelow.insertBefore(marker.element, elemDroppableBelow.lastElementChild);
+      } else {
+        elemDroppableBelow.appendChild(marker.element);
+      }
     } else if (marker.element.classList.contains("bitem-mon")) {
       const items = elemDroppableBelow.getElementsByClassName("bitem-mon");
       if (items.length > 1) {
         cancelDragAndDrop();
         return;
       }
-      marker.element.style.left = "100%";
-      marker.element.style.top = "-50%";
+      marker.element.style.left = null;
+      marker.element.style.top = null;
+      elemDroppableBelow.appendChild(marker.element);
     }
     marker.element.removeEventListener("mousedown", dragFromOrigin, false);
     marker.element.removeEventListener("mousedown", dragCloneFromOrigin, false);
@@ -425,7 +432,6 @@ function cancelDragAndDrop() {
   dragData.marker.element.classList.remove("dropped");
   dragData.marker.element.classList.remove("dragging");
   
-  console.log('b', dragData.marker.parent)
   dragData.marker.element.remove();
   if (dragData.marker.parent) {
     dragData.marker.parent.appendChild(dragData.marker.element);
