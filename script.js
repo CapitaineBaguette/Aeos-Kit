@@ -67,7 +67,6 @@ const ElDrawSize = document.getElementById("draw-size");
   copyPurpleToOrangePicks();
   addZoomEvents();
   setDraggableElements();
-  addDrawingEvents();
   addScrollEvents();
   
   setDrawColor(ElDrawColor);
@@ -126,7 +125,10 @@ function handleDrawing() {
     ElDrawSizeTool.removeAttribute("disabled");
     ElEraserTool.removeAttribute("disabled");  
     ElUndoTool.removeAttribute("disabled"); 
-    ElRedoTool.removeAttribute("disabled"); 
+    ElRedoTool.removeAttribute("disabled");
+
+    drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
+    document.addEventListener("mousedown", onStartDraw);
   } else {
     ElCanvas.classList.remove("drawing");
     ElDrawColorTool.setAttribute("disabled", "");
@@ -134,71 +136,65 @@ function handleDrawing() {
     ElEraserTool.setAttribute("disabled", "");
     ElUndoTool.setAttribute("disabled", "");
     ElRedoTool.setAttribute("disabled", "");
+
+    drawingData.history = [];
+    drawingData.historyPosition = 0;
+    document.removeEventListener("mousedown", onStartDraw, false);
   }
 }
 
+function onStartDraw(e) {
+  if (e.button !== 0) return;
+  if (e.target.id !== "canvas") return;
+  drawingData.drawing = true;
+  drawingData.lastPointX = (e.clientX - zoomMapData.pointX) / zoomMapData.scale;
+  drawingData.lastPointY = (e.clientY - zoomMapData.pointY) / zoomMapData.scale;
+  document.addEventListener("mousemove", draw);
+  document.addEventListener("mouseup", onEndDraw);
+}
 
-/**
- * Ajoute les événements de dessin au canvas.
- * Elle permet à l'utilisateur de dessiner sur le canvas en utilisant la souris 
- * et en ajustant la taille du pinceau en fonction de la valeur du curseur.
- */
-function addDrawingEvents() {
+function onEndDraw(e) {
+  if (!drawingData.drawing) return;
+  if (e.target.id !== "canvas") return;
+  drawingData.drawing = false;
+  if (drawingData.historyPosition < drawingData.history.length-1) {
+    drawingData.history.splice(drawingData.historyPosition + 1);
+  }
   drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
-  document.addEventListener("mousedown", onStartDraw);
+  drawingData.historyPosition++;
+  document.removeEventListener("mousemove", draw, false);
+  document.removeEventListener("mouseup", onEndDraw, false);
+}
 
-  function onStartDraw(e) {
-    e.preventDefault();
-    if (e.button !== 0) return;
-    drawingData.drawing = true;
-    drawingData.lastPointX = (e.clientX - zoomMapData.pointX) / zoomMapData.scale;
-    drawingData.lastPointY = (e.clientY - zoomMapData.pointY) / zoomMapData.scale;
-    document.addEventListener("mousemove", draw);
-    document.addEventListener("mouseup", onEndDraw);
-  }
+function draw(e) {
+  if(!drawingData.drawing) return;
+  
+  // Calcul de la position du point actuel de la souris
+  const pointX = (e.clientX - zoomMapData.pointX) / zoomMapData.scale;
+  const pointY = (e.clientY - zoomMapData.pointY) / zoomMapData.scale;
 
-  function onEndDraw(e) {
-    if (!drawingData.drawing) return;
-    drawingData.drawing = false;
-    if (drawingData.historyPosition < drawingData.history.length-1) {
-      drawingData.history.splice(drawingData.historyPosition + 1);
-    }
-    drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
-    drawingData.historyPosition++;
-    document.removeEventListener("mousemove", draw, false);
-    document.removeEventListener("mouseup", onEndDraw, false);
-  }
+  // Calcule le nombre d'étapes nécessaires pour dessiner un trait fluide entre le point de départ et le point actuel
+  const distance = Math.sqrt(Math.pow(pointX - drawingData.lastPointX, 2) + Math.pow(pointY - drawingData.lastPointY, 2));
+  const steps = Math.floor(distance / drawingData.size);
 
-  function draw(e) {
-    if(!drawingData.drawing) return;
-
-    // Calcul de la position du point actuel de la souris
-    const pointX = (e.clientX - zoomMapData.pointX) / zoomMapData.scale;
-    const pointY = (e.clientY - zoomMapData.pointY) / zoomMapData.scale;
-
-    // Calcule le nombre d'étapes nécessaires pour dessiner un trait fluide entre le point de départ et le point actuel
-    const distance = Math.sqrt(Math.pow(pointX - drawingData.lastPointX, 2) + Math.pow(pointY - drawingData.lastPointY, 2));
-    const steps = Math.floor(distance / drawingData.size);
-
-    // Dessin du trait
-    for(let i = 0; i < steps; i++) {
-      const t = (i + 1) / steps;
-      const x = drawingData.lastPointX + (pointX - drawingData.lastPointX) * t;
-      const y = drawingData.lastPointY + (pointY - drawingData.lastPointY) * t;
-      Ctx.beginPath();
-      Ctx.arc(x, y, drawingData.size, 0, 2*Math.PI);
-      Ctx.fill();
-    }
-
-    // Dessin du point
+  // Dessin du trait
+  for(let i = 0; i < steps; i++) {
+    const t = (i + 1) / steps;
+    const x = drawingData.lastPointX + (pointX - drawingData.lastPointX) * t;
+    const y = drawingData.lastPointY + (pointY - drawingData.lastPointY) * t;
     Ctx.beginPath();
-    Ctx.arc(pointX, pointY, drawingData.size, 0, 2*Math.PI);
+    Ctx.arc(x, y, drawingData.size, 0, 2*Math.PI);
     Ctx.fill();
-
-    // Enregistre la position actuelle de la souris comme étant la position de départ pour le prochain trait à dessiner
-    drawingData.lastPointX = pointX;
-    drawingData.lastPointY = pointY;
   }
+
+  // Dessin du point
+  Ctx.beginPath();
+  Ctx.arc(pointX, pointY, drawingData.size, 0, 2*Math.PI);
+  Ctx.fill();
+
+  // Enregistre la position actuelle de la souris comme étant la position de départ pour le prochain trait à dessiner
+  drawingData.lastPointX = pointX;
+  drawingData.lastPointY = pointY;
 }
 
 function redo() {
