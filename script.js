@@ -25,8 +25,11 @@ const dragData = {
   mouseup: null
 }
 const Markers = [];
-
-let scale = 1;
+const mouseData = {
+  isRightClick: false,
+  rightClickTimeout: null,
+  isLongRightClick: false
+}
 
 // ELEMENTS
 const ElMapContainer = document.getElementById("map-container");
@@ -97,6 +100,7 @@ function initHoverText() {
 
     elem.onmouseover = () => {
       tooltipTimerId = setTimeout(() => {
+        if (mouseData.isLongRightClick) return;
         const tooltip = document.createElement("div");
         tooltip.id = "tooltip-item";
         tooltip.classList.add("tooltip-item");
@@ -116,6 +120,13 @@ function initHoverText() {
       const tooltip = document.getElementById("tooltip-item");
       tooltip?.parentNode.removeChild(tooltip);
     };
+
+    elem.onmousedown = () => {
+      clearTimeout(tooltipTimerId);
+
+      const tooltip = document.getElementById("tooltip-item");
+      tooltip?.parentNode.removeChild(tooltip);
+    }
   }
 }
 
@@ -299,11 +310,22 @@ function setDraggableElements() {
   const baseDragElts = ElBasePicks.getElementsByClassName("draggable");
   const itemDragElts = ElItemsPicks.getElementsByClassName("draggable");
 
+  window.addEventListener("mouseup", (e) => {
+    if (e.button === 2) {
+      if (mouseData.isRightClick) {
+        removeDragElement(e);
+      }
+      mouseData.isRightClick = false;
+      mouseData.isLongRightClick = false;
+      clearTimeout(mouseData.rightClickTimeout);
+    }
+  });
+
   for (const el of purpleDragElts) {
     el.id = `dragId-${INC_DRAGID}`;
     el.setAttribute("data-droppable", "true");
     el.setAttribute("data-drop-item", "true");
-    el.addEventListener("mousedown", dragFromOrigin);
+    el.addEventListener("mousedown", onDragMouseDown);
 
     INC_DRAGID++;
   }
@@ -312,21 +334,21 @@ function setDraggableElements() {
     el.id = `dragId-${INC_DRAGID}`;
     el.setAttribute("data-droppable", "true");
     el.setAttribute("data-drop-item", "true");
-    el.addEventListener("mousedown", dragFromOrigin);
+    el.addEventListener("mousedown", onDragMouseDown);
 
     INC_DRAGID++;
   }
 
   for (const el of neutralDragElts) {
     el.id = `dragId-${INC_DRAGID}`;
-    el.addEventListener("mousedown", dragCloneFromOrigin);
+    el.addEventListener("mousedown", onDragCloneMouseDown);
 
     INC_DRAGID++;
   }
 
   for (const el of baseDragElts) {
     el.id = `dragId-${INC_DRAGID}`;
-    el.addEventListener("mousedown", dragCloneFromOrigin);
+    el.addEventListener("mousedown", onDragCloneMouseDown);
 
     INC_DRAGID++;
   }
@@ -334,7 +356,7 @@ function setDraggableElements() {
   for (const el of itemDragElts) {
     el.id = `dragId-${INC_DRAGID}`;
     el.setAttribute("data-item", "true");
-    el.addEventListener("mousedown", dragCloneFromOrigin);
+    el.addEventListener("mousedown", onDragCloneMouseDown);
 
     INC_DRAGID++;
   }
@@ -359,11 +381,22 @@ function moveAt(elem, x, y) {
   }
 }
 
+function onDragMouseDown(e, clone) {
+  if (e.button === 2) {
+    mouseData.isRightClick = true;
+    mouseData.rightClickTimeout = setTimeout(() => {
+      if (mouseData.isRightClick) {
+        mouseData.isRightClick = false;
+        mouseData.isLongRightClick = true;
+      }
+    }, 150);
+  } else {
+    dragFromOrigin(e, clone);
+  }
+}
 
-function dragCloneFromOrigin(e) {
-  e.stopPropagation();
-  e.preventDefault();
-  dragFromOrigin(e, true);
+function onDragCloneMouseDown(e) {
+  onDragMouseDown(e, true);
 }
 
 /**
@@ -372,10 +405,6 @@ function dragCloneFromOrigin(e) {
 function dragFromOrigin(e, clone) {
   e.stopPropagation();
   e.preventDefault();
-  if (e.button === 2) {
-    removeDragElement(e);
-    return;
-  }
 
   const elem = clone ? e.target.cloneNode(true) : e.target;
 
@@ -404,7 +433,7 @@ function dragFromOrigin(e, clone) {
     elem.id = `dragId-${INC_DRAGID}`;
     INC_DRAGID++;
     e.target.parentElement.appendChild(elem);
-    elem.addEventListener("mousedown", dragFromOrigin);
+    elem.addEventListener("mousedown", onDragMouseDown);
   } else {
     marker.parent = elem.parentElement;
   }
@@ -494,8 +523,8 @@ function dragDrop(e) {
       marker.element.style.top = null;
       elemDroppableBelow.appendChild(marker.element);
     }
-    marker.element.removeEventListener("mousedown", dragFromOrigin, false);
-    marker.element.removeEventListener("mousedown", dragCloneFromOrigin, false);
+    marker.element.removeEventListener("mousedown", onDragMouseDown, false);
+    marker.element.removeEventListener("mousedown", onDragCloneMouseDown, false);
     marker.element.addEventListener("mousedown", cancelDragAndDrop);
   } else {
     cancelDragAndDrop();
@@ -584,7 +613,7 @@ function removeDragElement(e) {
 function addZoomEvents() {
   ElMapContainer.addEventListener("mousedown", onMapMouseDown);
   ElMapContainer.addEventListener("mouseup", onMapMouseUp);
-  ElMapContainer.addEventListener("mousemove", onMapMouseMove);
+  window.addEventListener("mousemove", onMapMouseMove);
   ElMapContainer.addEventListener("mouseleave", onMapMouseUp);
   ElMapContainer.addEventListener("mousewheel", onMapMouseWheel);
 }
