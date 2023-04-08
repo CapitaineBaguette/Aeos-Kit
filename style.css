@@ -146,10 +146,14 @@ p {
 /* Top Buttons */
 .top-menu {
   position: fixed;
+  display: -ms-grid;
   display: grid;
   grid-auto-flow: column;
   justify-items: end;
   width: 100vw;
+  -ms-grid-columns: auto -webkit-min-content auto;
+  -ms-grid-columns: auto min-content auto;
+  grid-template-columns: auto -webkit-min-content auto;
   grid-template-columns: auto min-content auto;
 }
 
@@ -161,6 +165,7 @@ p {
   font-weight: bold;
   text-shadow: 2px 2px 1px black, 2px 1px 1px black;
   text-align: center;
+  display: -ms-grid;
   display: grid;
   grid-auto-flow: column;
 }
@@ -174,12 +179,15 @@ p {
 }
 
 .time:hover {
+  background: -webkit-gradient(linear, left top, right top, color-stop(22%, #8473fd), color-stop(23%, #e4825c), color-stop(46%, #e4825c), color-stop(47%, #8473fd), color-stop(57%, #8473fd), color-stop(58%, #e4825c), color-stop(80%, #e4825c), color-stop(80%, #8473fd));
+  background: -o-linear-gradient(left, #8473fd 22%, #e4825c 23%, #e4825c 46%, #8473fd 47%, #8473fd 57%, #e4825c 58%, #e4825c 80%, #8473fd 80%);
   background: linear-gradient(90deg, #8473fd 22%, #e4825c 23%, #e4825c 46%, #8473fd 47%, #8473fd 57%, #e4825c 58%, #e4825c 80%, #8473fd 80%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: none;
-  filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 1));
+  -webkit-filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 1));
+          filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 1));
 }
 
 .dec-time:hover {
@@ -599,11 +607,41 @@ p {
   top: 2.5vh;
   left: 0;
 }
+.left-name {
+  top: 25vh;
+  left: 0;
+  -webkit-transform: rotate(90deg) translateY(8vh);
+      -ms-transform: rotate(90deg) translateY(8vh);
+          transform: rotate(90deg) translateY(8vh);
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(#8473fd), color-stop(30%, #594ba8), color-stop(70%, #594ba8), color-stop(#8473fd), to(transparent));
+  background: -o-linear-gradient(left, transparent, #8473fd, #594ba8 30%, #594ba8 70%, #8473fd, transparent);
+  background: linear-gradient(90deg, transparent, #8473fd, #594ba8 30%, #594ba8 70%, #8473fd, transparent);
+  padding: 0 5vh;
+  color: #fff;
+}
 
 .right-menu {
   height: 75vh;
   top: 2.5vh;
   right: 0;
+}
+.right-name {
+  top: 25vh;
+  right: 0;
+  -webkit-transform: rotate(-90deg) translateY(8vh);
+      -ms-transform: rotate(-90deg) translateY(8vh);
+          transform: rotate(-90deg) translateY(8vh);
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(#e4825c), color-stop(30%, #ca6e4a), color-stop(70%, #ca6e4a), color-stop(#e4825c), to(transparent));
+  background: -o-linear-gradient(left, transparent, #e4825c, #ca6e4a 30%, #ca6e4a 70%, #e4825c, transparent);
+  background: linear-gradient(90deg, transparent, #e4825c, #ca6e4a 30%, #ca6e4a 70%, #e4825c, transparent);
+  padding: 0 5vh;
+  color: #fff;
 }
 
 .bottom-left-menu {
@@ -612,6 +650,18 @@ p {
   bottom: 0;
   left: 10vw;
 }
+.bottom-left-name {
+  bottom: 0;
+  left: 10vw;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(#1e1e20), color-stop(30%, #1b1731), color-stop(70%, #1b1731), color-stop(#1e1e20), to(transparent));
+  background: -o-linear-gradient(left, transparent, #1e1e20, #1b1731 30%, #1b1731 70%, #1e1e20, transparent);
+  background: linear-gradient(90deg, transparent, #1e1e20, #1b1731 30%, #1b1731 70%, #1e1e20, transparent);
+  padding: 0 5vh;
+  color: #fff;
+}
 
 .bottom-right-menu {
   width: 15vw;
@@ -619,12 +669,36 @@ p {
   bottom: 0;
   right: 20vw;
 }
+.bottom-right-name {
+  bottom: 0;
+  left: 60vw;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(#1e1e20), color-stop(30%, #1b1731), color-stop(70%, #1b1731), color-stop(#1e1e20), to(transparent));
+  background: -o-linear-gradient(left, transparent, #1e1e20, #1b1731 30%, #1b1731 70%, #1e1e20, transparent);
+  background: linear-gradient(90deg, transparent, #1e1e20, #1b1731 30%, #1b1731 70%, #1e1e20, transparent);
+  padding: 0 5vh;
+  color: #fff;
+}
 
 .bottom-middle-menu {
   width: 25vw;
   height: 12vh;
   bottom: 0;
   left: 37.5vw;
+}
+.bottom-middle-name {
+  bottom: 0;
+  left: 34vw;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(#1e1e20), color-stop(30%, #1b1731), color-stop(70%, #1b1731), color-stop(#1e1e20), to(transparent));
+  background: -o-linear-gradient(left, transparent, #1e1e20, #1b1731 30%, #1b1731 70%, #1e1e20, transparent);
+  background: linear-gradient(90deg, transparent, #1e1e20, #1b1731 30%, #1b1731 70%, #1e1e20, transparent);
+  padding: 0 5vh;
+  color: #fff;
 }
 
 .right-menu .orange-side {
@@ -731,14 +805,29 @@ p {
       -ms-transform: translateX(-100%);
           transform: translateX(-100%);
 }
+.left-name.closed {
+  -webkit-transform: rotate(90deg) translateY(50vh);
+      -ms-transform: rotate(90deg) translateY(50vh);
+          transform: rotate(90deg) translateY(50vh);
+}
 
 .right-menu.closed {
   -webkit-transform: translateX(100%);
       -ms-transform: translateX(100%);
           transform: translateX(100%);
 }
+.right-name.closed {
+  -webkit-transform: rotate(-90deg) translateY(50vh);
+      -ms-transform: rotate(-90deg) translateY(50vh);
+          transform: rotate(-90deg) translateY(50vh);
+}
 
 .bottom-left-menu.closed {
+  -webkit-transform: translateY(100%);
+      -ms-transform: translateY(100%);
+          transform: translateY(100%);
+}
+.bottom-left-name.closed {
   -webkit-transform: translateY(100%);
       -ms-transform: translateY(100%);
           transform: translateY(100%);
@@ -749,12 +838,23 @@ p {
       -ms-transform: translateY(100%);
           transform: translateY(100%);
 }
+.bottom-right-name.closed {
+  -webkit-transform: translateY(100%);
+      -ms-transform: translateY(100%);
+          transform: translateY(100%);
+}
 
 .bottom-middle-menu.closed {
   -webkit-transform: translateY(100%);
       -ms-transform: translateY(100%);
           transform: translateY(100%);
 }
+.bottom-middle-name.closed {
+  -webkit-transform: translateY(100%);
+      -ms-transform: translateY(100%);
+          transform: translateY(100%);
+}
+
 
 .base-picks {
   display: -ms-grid;
@@ -792,6 +892,7 @@ p {
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+  cursor: -webkit-grab;
   cursor: grab;
   display: inline-block;
 }

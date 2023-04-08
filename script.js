@@ -685,6 +685,8 @@ function toggleMenu(self, id) {
 
   const elMenu = document.getElementById(id);
   elMenu.parentElement.classList.toggle("closed");
+  const elName = document.querySelector(`[data-name="${elMenu.parentElement.id}"]`);
+  elName.classList.toggle("closed");
 }
 
 /**
