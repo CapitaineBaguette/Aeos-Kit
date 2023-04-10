@@ -81,8 +81,8 @@ p {
 }
 
 .base-mon {
-  width: 5.5vh!important;
-  height: 5.5vh!important;
+  width: 5.5vh;
+  height: 5.5vh;
 }
 
 .bitem-mon {
@@ -142,6 +142,13 @@ p {
   z-index: 1000;
 }
 
+.base-mon.dropped {
+  width: 10vh;
+  height: 10vh;
+  max-width: 4vw;
+  max-height: 4vw;
+}
+
 
 /* Top Buttons */
 .top-menu {
@@ -158,9 +165,6 @@ p {
 }
 
 .timer {
-  height: 40px;
-  border-radius: 0 0 0 5px;
-  background: #0000008a;
   font-size: xx-large;
   font-weight: bold;
   text-shadow: 2px 2px 1px black, 2px 1px 1px black;
@@ -595,11 +599,7 @@ p {
 .menu {
   position: fixed;
   width: 20vw;
-  -webkit-transition: -webkit-transform .5s;
-  transition: -webkit-transform .5s;
-  -o-transition: transform .5s;
-  transition: transform .5s;
-  transition: transform .5s, -webkit-transform .5s;
+  transition: .7s;
 }
 
 .left-menu {
@@ -621,6 +621,7 @@ p {
   background: linear-gradient(90deg, transparent, #8473fd, #594ba8 30%, #594ba8 70%, #8473fd, transparent);
   padding: 0 5vh;
   color: #fff;
+  font-size: x-large;
 }
 
 .right-menu {
@@ -642,6 +643,7 @@ p {
   background: linear-gradient(90deg, transparent, #e4825c, #ca6e4a 30%, #ca6e4a 70%, #e4825c, transparent);
   padding: 0 5vh;
   color: #fff;
+  font-size: x-large;
 }
 
 .bottom-left-menu {
@@ -656,11 +658,12 @@ p {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(#1e1e20), color-stop(30%, #1b1731), color-stop(70%, #1b1731), color-stop(#1e1e20), to(transparent));
-  background: -o-linear-gradient(left, transparent, #1e1e20, #1b1731 30%, #1b1731 70%, #1e1e20, transparent);
-  background: linear-gradient(90deg, transparent, #1e1e20, #1b1731 30%, #1b1731 70%, #1e1e20, transparent);
+  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(#1e1e20), color-stop(30%, #535150de), color-stop(70%, #535150de), color-stop(#1e1e20), to(transparent));
+  background: -o-linear-gradient(left, transparent, #7c7776de, #535150de 30%, #535150de 70%, #7c7776de, transparent);
+  background: linear-gradient(90deg, transparent, #7c7776de, #535150de 30%, #535150de 70%, #7c7776de, transparent);
   padding: 0 5vh;
   color: #fff;
+  font-size: x-large;
 }
 
 .bottom-right-menu {
@@ -675,11 +678,12 @@ p {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(#1e1e20), color-stop(30%, #1b1731), color-stop(70%, #1b1731), color-stop(#1e1e20), to(transparent));
-  background: -o-linear-gradient(left, transparent, #1e1e20, #1b1731 30%, #1b1731 70%, #1e1e20, transparent);
-  background: linear-gradient(90deg, transparent, #1e1e20, #1b1731 30%, #1b1731 70%, #1e1e20, transparent);
+  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(#7c7776de), color-stop(30%, #535150de), color-stop(70%, #535150de), color-stop(#7c7776de), to(transparent));
+  background: -o-linear-gradient(left, transparent, #7c7776de, #535150de 30%, #535150de 70%, #7c7776de, transparent);
+  background: linear-gradient(90deg, transparent, #7c7776de, #535150de 30%, #535150de 70%, #7c7776de, transparent);
   padding: 0 5vh;
   color: #fff;
+  font-size: x-large;
 }
 
 .bottom-middle-menu {
@@ -694,11 +698,12 @@ p {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(#1e1e20), color-stop(30%, #1b1731), color-stop(70%, #1b1731), color-stop(#1e1e20), to(transparent));
-  background: -o-linear-gradient(left, transparent, #1e1e20, #1b1731 30%, #1b1731 70%, #1e1e20, transparent);
-  background: linear-gradient(90deg, transparent, #1e1e20, #1b1731 30%, #1b1731 70%, #1e1e20, transparent);
+  background: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(#7c7776de), color-stop(30%, #535150de), color-stop(70%, #535150de), color-stop(#7c7776de), to(transparent));
+  background: -o-linear-gradient(left, transparent, #7c7776de, #535150de 30%, #535150de 70%, #7c7776de, transparent);
+  background: linear-gradient(90deg, transparent, #7c7776de, #535150de 30%, #535150de 70%, #7c7776de, transparent);
   padding: 0 5vh;
   color: #fff;
+  font-size: x-large;
 }
 
 .right-menu .orange-side {
@@ -720,6 +725,8 @@ p {
 .menu .close-menu {
   position: absolute;
   z-index: -1;
+  text-align: center;
+  width: max-content;
 }
 
 .menu .close-menu:hover {
@@ -735,9 +742,24 @@ p {
           transform: translate(100%, 50%);
   border-radius: 0px 10px 10px 0px;
   padding: 1vw 1vh 1vw 20vw;
-  background: -o-linear-gradient(right, #5a4aade1 0%, #5a4aade1 5%, #00000000 15%);
-  background: -webkit-gradient(linear, right top, left top, from(#5a4aade1), color-stop(5%, #5a4aade1), color-stop(15%, #00000000));
-  background: linear-gradient(270deg, #5a4aade1 0%, #5a4aade1 5%, #00000000 15%);
+  background: -o-linear-gradient(right, #5a4aade1 0%, #5a4aade1 10%, #00000000 20%);
+  background: -webkit-gradient(linear, right top, left top, from(#5a4aade1), color-stop(10%, #5a4aade1), color-stop(20%, #00000000));
+  background: linear-gradient(270deg, #5a4aade1 0%, #5a4aade1 10%, #00000000 20%);
+  display: flex;
+  align-items: center;
+  direction: rtl;
+  height: 10vh;
+  max-height: 4vw;
+}
+
+.left-menu.closed .close-menu {
+  -webkit-transform: translate(90%, 50%);
+      -ms-transform: translate(90%, 50%);
+          transform: translate(90%, 50%);
+}
+
+.left-menu.closed .close-menu .menu-name {
+  transform: rotate(90deg) translateY(-100%);
 }
 
 .right-menu .close-menu {
@@ -748,9 +770,24 @@ p {
           transform: translate(-100%, 50%);
   border-radius: 10px 0px 0px 10px;
   padding: 1vw 20vw 1vw 1vh;
-  background: -o-linear-gradient(left, #76453cdc 0%, #76453cdc 5%, #00000000 15%);
-  background: -webkit-gradient(linear, left top, right top, from(#76453cdc), color-stop(5%, #76453cdc), color-stop(15%, #00000000));
-  background: linear-gradient(90deg, #76453cdc 0%, #76453cdc 5%, #00000000 15%);
+  background: -o-linear-gradient(left, #76453cdc 0%, #76453cdc 10%, #00000000 20%);
+  background: -webkit-gradient(linear, left top, right top, from(#76453cdc), color-stop(10%, #76453cdc), color-stop(20%, #00000000));
+  background: linear-gradient(90deg, #76453cdc 0%, #76453cdc 10%, #00000000 20%);
+  display: flex;
+  align-items: center;
+  direction: ltr;
+  height: 10vh;
+  max-height: 4vw;
+}
+
+.right-menu.closed .close-menu {
+  -webkit-transform: translate(-90%, 50%);
+      -ms-transform: translate(-90%, 50%);
+          transform: translate(-90%, 50%);
+}
+
+.right-menu.closed .close-menu .menu-name {
+  transform: rotate(-90deg) translateY(-100%);
 }
 
 .bottom-left-menu .close-menu {
@@ -764,6 +801,8 @@ p {
   background: -o-linear-gradient(top, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
   background: -webkit-gradient(linear, left top, left bottom, from(#7c7776de), color-stop(20%, #7c7776de), color-stop(50%, #00000000));
   background: linear-gradient(180deg, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
+  width: 14vh;
+  max-width: 6vw;
 }
 
 .bottom-right-menu .close-menu {
@@ -777,6 +816,8 @@ p {
   background: -o-linear-gradient(top, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
   background: -webkit-gradient(linear, left top, left bottom, from(#7c7776de), color-stop(20%, #7c7776de), color-stop(50%, #00000000));
   background: linear-gradient(180deg, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
+  width: 14vh;
+  max-width: 6vw;
 }
 
 .bottom-middle-menu .close-menu {
@@ -790,14 +831,16 @@ p {
   background: -o-linear-gradient(top, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
   background: -webkit-gradient(linear, left top, left bottom, from(#7c7776de), color-stop(20%, #7c7776de), color-stop(50%, #00000000));
   background: linear-gradient(180deg, #7c7776de 0%, #7c7776de 20%, #00000000 50%);
+  width: 25vh;
+  max-width: 10vw;
 }
 
-.menu.closed {
-  -webkit-transition: -webkit-transform .5s;
-  transition: -webkit-transform .5s;
-  -o-transition: transform .5s;
-  transition: transform .5s;
-  transition: transform .5s, -webkit-transform .5s;
+.menu-name {
+  font-size: large;
+}
+
+.close-menu .closed {
+  display: none;
 }
 
 .left-menu.closed {

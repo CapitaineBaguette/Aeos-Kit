@@ -680,15 +680,17 @@ function onMouseOutTooltip(id) {
  * Affiche ou cacher un menu
  */
 function toggleMenu(self, id) {
-  if (self.innerText === "◄") self.innerText = "►";
-  else if (self.innerText === "►") self.innerText = "◄";
-  else if (self.innerText === "▲") self.innerText = "▼";
-  else if (self.innerText === "▼") self.innerText = "▲";
+  const elArrow = self.children[0];
+  if (elArrow.innerText === "◄") elArrow.innerText = "►";
+  else if (elArrow.innerText === "►") elArrow.innerText = "◄";
+  else if (elArrow.innerText === "▲") elArrow.innerText = "▼";
+  else if (elArrow.innerText === "▼") elArrow.innerText = "▲";
 
   const elMenu = document.getElementById(id);
   elMenu.parentElement.classList.toggle("closed");
-  const elName = document.querySelector(`[data-name="${elMenu.parentElement.id}"]`);
-  elName.classList.toggle("closed");
+
+  const elName = self.children[1];
+  elName.classList.toggle("closed")
 }
 
 /**
