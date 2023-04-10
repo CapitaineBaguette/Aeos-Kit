@@ -416,7 +416,7 @@ function dragFromOrigin(e, clone) {
   // Gère la suppression du tooltip de l'élément
   dragData.onmouseover = elem.onmouseover;
   dragData.onmouseout = elem.onmouseout;
-  elem.onmouseout();
+  if (typeof elem.onmouseout === 'function') elem.onmouseout();
   elem.onmouseover = null;
   elem.onmouseout = null;
 
