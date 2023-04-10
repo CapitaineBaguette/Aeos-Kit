@@ -416,7 +416,7 @@ function dragFromOrigin(e, clone) {
   // Gère la suppression du tooltip de l'élément
   dragData.onmouseover = elem.onmouseover;
   dragData.onmouseout = elem.onmouseout;
-  if (typeof elem.onmouseout === 'function') elem.onmouseout();
+  if (typeof elem.onmouseout === "function") elem.onmouseout();
   elem.onmouseover = null;
   elem.onmouseout = null;
 
@@ -500,7 +500,9 @@ function dragDrop(e) {
   {
     if (marker.element.classList.contains("hitem-mon")) {
       const items = elemDroppableBelow.getElementsByClassName("hitem-mon");
-      if (items.length > 3) {
+      console.log(items)
+      if (items.length >= 3) {
+        console.log(items)
         cancelDragAndDrop();
         return;
       }
@@ -515,7 +517,7 @@ function dragDrop(e) {
       }
     } else if (marker.element.classList.contains("bitem-mon")) {
       const items = elemDroppableBelow.getElementsByClassName("bitem-mon");
-      if (items.length > 1) {
+      if (items.length >= 1) {
         cancelDragAndDrop();
         return;
       }
