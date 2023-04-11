@@ -16,7 +16,9 @@ const drawingData = {
   lastPointY: null,
   size: 1,
   history: [],
-  historyPosition: 0
+  historyPosition: 0,
+  imgText: null ,
+  writingMode: false
 }
 
 const dragData = {
@@ -61,11 +63,16 @@ const ElDrawSizeTool = document.getElementById("draw-size-tool");
 const ElEraserTool = document.getElementById("eraser-tool");
 const ElUndoTool = document.getElementById("undo-tool");
 const ElRedoTool = document.getElementById("redo-tool");
+const ElTextTool = document.getElementById("text-tool");
+const ElTextImg = document.getElementById("text-img");
 
 const ElCanvas = document.getElementById("canvas");
 const Ctx = ElCanvas.getContext("2d");
 const ElDrawColor = document.getElementById("draw-color");
 const ElDrawSize = document.getElementById("draw-size");
+
+const ElCanvasText = document.createElement("canvas");
+const CtxCanvasText = ElCanvasText.getContext("2d");
 
 const ElModalHelp = document.getElementById("modal-help");
 
@@ -84,6 +91,7 @@ window.onload = () => {
 
   initHoverText();
   
+  initTextImg();
   setDrawColor(ElDrawColor);
   setDrawSize(ElDrawSize);
   document.addEventListener("contextmenu", event => event.preventDefault());
@@ -169,6 +177,8 @@ function initCanvas() {
   const mapRect = ElMap.getBoundingClientRect();
   Ctx.canvas.width = mapRect.width;
   Ctx.canvas.height = mapRect.height;
+  ElCanvas.addEventListener("click", writeText);
+  drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
 }
 
 /**
@@ -176,6 +186,76 @@ function initCanvas() {
  */
 function setDrawColor(self) {
   Ctx.fillStyle = self.value;
+  setTextImg();
+}
+
+function initTextImg() {
+  ElCanvasText.width = ElTextImg.width;
+  ElCanvasText.height = ElTextImg.height;
+  CtxCanvasText.drawImage(ElTextImg, 0, 0, ElTextImg.width, ElTextImg.height);
+  drawingData.imgText = CtxCanvasText.getImageData(0, 0, ElCanvasText.width, ElCanvasText.height);
+}
+
+function setTextImg() {
+  const rgb = hexToRgb(Ctx.fillStyle);
+
+  for (var i = 0; i < drawingData.imgText.data.length; i += 4) {
+    drawingData.imgText.data[i] = rgb[0];
+    drawingData.imgText.data[i + 1] = rgb[1];
+    drawingData.imgText.data[i + 2] = rgb[2];
+  }
+
+  CtxCanvasText.putImageData(drawingData.imgText, 0, 0);
+  ElTextImg.src = ElCanvasText.toDataURL("image/png");
+}
+
+function hexToRgb(hex) {
+  hex = hex.replace("#", "");
+  const bigint = parseInt(hex, 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return [r, g, b];
+}
+
+function handleText(e) {
+  drawingData.writingMode = !drawingData.writingMode;
+  if (drawingData.writingMode) {
+    selectText(e);
+  } else {
+    unselectText(e);
+  }
+}
+
+function writeText(e) {
+  if (!drawingData.writingMode) return;
+  drawingData.lastPointX = (e.clientX - zoomMapData.pointX) / zoomMapData.scale;
+  drawingData.lastPointY = (e.clientY - zoomMapData.pointY) / zoomMapData.scale;
+  const text = prompt("Write something...");
+  if (text !== null && text !== "") {
+    Ctx.font = `${32 + drawingData.size * 4}px Comic Sans MS`;
+    Ctx.fillText(text, drawingData.lastPointX, drawingData.lastPointY);
+    
+    if (drawingData.historyPosition < drawingData.history.length-1) {
+      drawingData.history.splice(drawingData.historyPosition + 1);
+    }
+    drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
+    drawingData.historyPosition++;
+  }
+}
+
+function selectText(e) {
+  ElTextTool.classList.add("selected");
+
+  ElPencilTool.classList.remove("selected");
+}
+
+function unselectText(e) {
+  if (e.target === ElCanvas) return;
+  ElTextTool.classList.remove("selected");
+  drawingData.writingMode = false;
+
+  ElPencilTool.classList.add("selected");
 }
 
 /**
@@ -214,8 +294,9 @@ function handleDrawing() {
     ElEraserTool.removeAttribute("disabled");  
     ElUndoTool.removeAttribute("disabled"); 
     ElRedoTool.removeAttribute("disabled");
+    ElTextTool.removeAttribute("disabled");
 
-    drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
+    ElPencilTool.classList.add("selected");
     document.addEventListener("mousedown", onStartDraw);
   } else {
     ElCanvas.classList.remove("drawing");
@@ -224,9 +305,9 @@ function handleDrawing() {
     ElEraserTool.setAttribute("disabled", "");
     ElUndoTool.setAttribute("disabled", "");
     ElRedoTool.setAttribute("disabled", "");
+    ElTextTool.setAttribute("disabled", "");
 
-    drawingData.history = [];
-    drawingData.historyPosition = 0;
+    ElPencilTool.classList.remove("selected");
     document.removeEventListener("mousedown", onStartDraw, false);
   }
 }
@@ -243,27 +324,31 @@ function onStartDraw(e) {
 
 function onEndDraw(e) {
   if (!drawingData.drawing) return;
-
   drawingData.drawing = false;
+  document.removeEventListener("mousemove", draw, false);
+  document.removeEventListener("mouseup", onEndDraw, false);
+
+  if (!drawingData.moving) return;
+  drawingData.moving = false;
   if (drawingData.historyPosition < drawingData.history.length-1) {
     drawingData.history.splice(drawingData.historyPosition + 1);
   }
   drawingData.history.push(Ctx.getImageData(0, 0, ElCanvas.width, ElCanvas.height));
   drawingData.historyPosition++;
-  document.removeEventListener("mousemove", draw, false);
-  document.removeEventListener("mouseup", onEndDraw, false);
+  
 }
 
 function draw(e) {
   if(!drawingData.drawing) return;
-  
+  unselectText();
+  drawingData.moving = true;
   // Calcul de la position du point actuel de la souris
   const pointX = (e.clientX - zoomMapData.pointX) / zoomMapData.scale;
   const pointY = (e.clientY - zoomMapData.pointY) / zoomMapData.scale;
 
   // Calcule le nombre d'étapes nécessaires pour dessiner un trait fluide entre le point de départ et le point actuel
   const distance = Math.sqrt(Math.pow(pointX - drawingData.lastPointX, 2) + Math.pow(pointY - drawingData.lastPointY, 2));
-  const steps = Math.floor(distance / drawingData.size);
+  const steps = Math.floor(distance);
 
   // Dessin du trait
   for(let i = 0; i < steps; i++) {

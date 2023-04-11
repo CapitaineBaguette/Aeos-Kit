@@ -266,28 +266,36 @@ p {
   gap: 5px;
 }
 
-.draw-size-tool:hover {
+.drawtool .selected {
+  outline: 2px dashed #9e9e9e;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+.-tool-tool:hover {
   color: #fff;
 }
 
-.pencil,
+.pencil-tool,
 .draw-color,
-.draw-size,
-.eraser,
-.undo,
-.redo {
+.draw-size-tool,
+.eraser-tool,
+.undo-tool,
+.redo-tool,
+.text-tool {
   cursor: pointer;
 }
 
-.redo {
+.redo-tool {
   -webkit-transform: scaleX(-1);
       -ms-transform: scaleX(-1);
           transform: scaleX(-1);
 }
 
-.pencil:hover,
-.eraser:hover,
-.undo:hover {
+.pencil-tool:hover,
+.eraser-tool:hover,
+.undo-tool:hover,
+.text-tool:hover {
   -webkit-transform: scale(1.1);
 	-ms-transform: scale(1.1);
 	    transform: scale(1.1);
@@ -296,7 +304,7 @@ p {
 	transition: .3s ease-in-out;
 }
 
-.redo:hover {
+.redo-tool:hover {
   -webkit-transform: scale(-1.1, 1.1);
 	-ms-transform: scale(-1.1, 1.1);
 	    transform: scale(-1.1, 1.1);

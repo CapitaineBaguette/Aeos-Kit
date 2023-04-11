@@ -32,23 +32,26 @@
 				<img id="reset-zoom" class="reset-zoom" src="ressources/icons/reset_zoom.png">
 			</div>
 			<div class="drawtool">
-				<div id="pencil-tool" onclick="handleDrawing()">
+				<div id="pencil-tool" class="pencil-tool" onclick="handleDrawing()">
 					<img id="pencil" class="pencil" src="ressources/icons/Pencil.png">
 				</div>
-				<div id="draw-color-tool" disabled>
+				<div id="draw-color-tool" class="draw-color-tool" disabled>
 					<input id="draw-color" class="draw-color" oninput="setDrawColor(this)" type="color" value="#ff0000">
 				</div>
-				<div id="draw-size-tool" disabled>
+				<div id="draw-size-tool" class="draw-size-tool" disabled>
 					<label>Size:</label>
 					<input id="draw-size" class="draw-size" onchange="setDrawSize(this)" type="number" min="1" max="10" value="3" step="1">
 				</div>
-				<div id="undo-tool" onclick="undo()" disabled>
+				<div id="text-tool" class="text-tool" onclick="handleText(event)" disabled>
+					<img id="text-img" class="text-img" src="ressources/icons/font.png">
+				</div>
+				<div id="undo-tool" class="undo-tool" onclick="undo()" disabled>
 					<img class="undo" src="ressources/icons/circular-arrow.png">
 				</div>
-				<div id="redo-tool" onclick="redo()" disabled>
+				<div id="redo-tool" class="redo-tool" onclick="redo()" disabled>
 					<img class="redo" src="ressources/icons/circular-arrow.png">
 				</div>
-				<div id="eraser-tool" onclick="clearCanvas()" disabled>
+				<div id="eraser-tool" class="eraser-tool" onclick="clearCanvas()" disabled>
 					<img id="eraser" class="eraser" src="ressources/icons/eraser.png">
 				</div>
 			</div>
