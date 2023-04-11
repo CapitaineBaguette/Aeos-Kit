@@ -1,4 +1,4 @@
-# Sommaire
+# Summary
 Website: [Aeos-Kit](https://capitainebaguette.github.io/Aeos-Kit/)
 <br>
 Download:  [Releases](https://github.com/CapitaineBaguette/Aeos-Kit/releases)
@@ -9,7 +9,7 @@ Sections:
 <br>
 \- [Français](#section-française)
 
-## Section anglaise <a name="section-anglaise"></a>
+## English section <a name="section-anglaise"></a>
 TO TRANSLATE
 
 ## Section française <a name="section-française"></a>
