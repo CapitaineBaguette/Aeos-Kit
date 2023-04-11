@@ -32,7 +32,7 @@
 				<img id="reset-zoom" class="reset-zoom" src="ressources/icons/reset_zoom.png">
 			</div>
 			<div class="drawtool">
-				<div id="pencil-tool" class="pencil-tool" onclick="handleDrawing()">
+				<div id="pencil-tool" class="pencil-tool" onclick="handleDrawing(event)">
 					<img id="pencil" class="pencil" src="ressources/icons/Pencil.png">
 				</div>
 				<div id="draw-color-tool" class="draw-color-tool" disabled>
@@ -419,6 +419,7 @@
 						<li class="li-img">On the map, hold down the left mouse button to draw.</li>
 						<li class="li-img"><img class="img-modal" src="ressources/icons/color.png"><p>Allows you to change the color of the line.</p></li>
 						<li class="li-img"><img class="img-modal dot-size" src="ressources/icons/dot-size.png"><p>Allows you to change the thickness of the line.</p></li>
+						<li class="li-img"><img class="img-modal" src="ressources/icons/font.png"><p>Activates/Deactivates the writing mode.</p></li>
 						<li class="li-img"><img class="img-modal" src="ressources/icons/circular-arrow.png"><p>Allows you to undo the last drawing actions.</p></li>
 						<li class="li-img"><img class="img-modal redo" src="ressources/icons/circular-arrow.png"><p>Allows you to redo the undone drawing actions.</p></li>
 						<li class="li-img"><img class="img-modal" src="ressources/icons/eraser.png"><p>Deletes all drawings.</p></li>
@@ -501,6 +502,7 @@
 						<li class="li-img">Sur la carte, maintenir enfoncé clic gauche pour dessiner.</li>
 						<li class="li-img"><img class="img-modal" src="ressources/icons/color.png"><p>Permet de changer la couleur du trait.</p></li>
 						<li class="li-img"><img class="img-modal dot-size" src="ressources/icons/dot-size.png"><p>Permet de changer l'épaisseur du trait.</p></li>
+						<li class="li-img"><img class="img-modal" src="ressources/icons/font.png"><p>Active/Désactive le mode écriture.</p></li>
 						<li class="li-img"><img class="img-modal" src="ressources/icons/circular-arrow.png"><p>Permet d'annuler les dernières actions du dessin.</p></li>
 						<li class="li-img"><img class="img-modal redo" src="ressources/icons/circular-arrow.png"><p>Permet de rétablir les actions annulées du dessin.</p></li>
 						<li class="li-img"><img class="img-modal" src="ressources/icons/eraser.png"><p>Supprime tous les dessins.</p></li>

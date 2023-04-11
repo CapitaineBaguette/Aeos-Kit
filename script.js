@@ -285,7 +285,7 @@ function clearCanvas() {
  * et désactive les boutons d'outils de dessin. 
  * La variable drawingData.inuse est utilisé pour suivre l'état actuel de dessin.
  */
-function handleDrawing() {
+function handleDrawing(e) {
   drawingData.inuse = !drawingData.inuse;
   if (drawingData.inuse) {
     ElCanvas.classList.add("drawing");
@@ -310,6 +310,8 @@ function handleDrawing() {
     ElPencilTool.classList.remove("selected");
     document.removeEventListener("mousedown", onStartDraw, false);
   }
+
+  unselectText(e);
 }
 
 function onStartDraw(e) {
@@ -585,9 +587,7 @@ function dragDrop(e) {
   {
     if (marker.element.classList.contains("hitem-mon")) {
       const items = elemDroppableBelow.getElementsByClassName("hitem-mon");
-      console.log(items)
       if (items.length >= 3) {
-        console.log(items)
         cancelDragAndDrop();
         return;
       }
