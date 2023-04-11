@@ -251,7 +251,7 @@ function selectText(e) {
 }
 
 function unselectText(e) {
-  if (e.target === ElCanvas) return;
+  if (e.target === ElCanvas && !drawingData.moving) return;
   ElTextTool.classList.remove("selected");
   drawingData.writingMode = false;
 
@@ -287,6 +287,9 @@ function clearCanvas() {
  */
 function handleDrawing(e) {
   drawingData.inuse = !drawingData.inuse;
+
+  unselectText(e);
+
   if (drawingData.inuse) {
     ElCanvas.classList.add("drawing");
     ElDrawColorTool.removeAttribute("disabled");
@@ -295,10 +298,11 @@ function handleDrawing(e) {
     ElUndoTool.removeAttribute("disabled"); 
     ElRedoTool.removeAttribute("disabled");
     ElTextTool.removeAttribute("disabled");
-
+    
     ElPencilTool.classList.add("selected");
     document.addEventListener("mousedown", onStartDraw);
   } else {
+    
     ElCanvas.classList.remove("drawing");
     ElDrawColorTool.setAttribute("disabled", "");
     ElDrawSizeTool.setAttribute("disabled", "");
@@ -310,8 +314,6 @@ function handleDrawing(e) {
     ElPencilTool.classList.remove("selected");
     document.removeEventListener("mousedown", onStartDraw, false);
   }
-
-  unselectText(e);
 }
 
 function onStartDraw(e) {
@@ -342,8 +344,8 @@ function onEndDraw(e) {
 
 function draw(e) {
   if(!drawingData.drawing) return;
-  unselectText();
   drawingData.moving = true;
+  unselectText(e);
   // Calcul de la position du point actuel de la souris
   const pointX = (e.clientX - zoomMapData.pointX) / zoomMapData.scale;
   const pointY = (e.clientY - zoomMapData.pointY) / zoomMapData.scale;
