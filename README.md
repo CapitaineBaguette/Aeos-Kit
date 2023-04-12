@@ -14,70 +14,21 @@ TO TRANSLATE
 
 ## Section française <a name="section-française"></a>
 ### Notice de modification
-  - Modifier la carte d'arrière plan
-  - Modifier les pokémon jouables
-  - Modifier les pokémon neutres
-  - Modifier les objets
-  - Modifier les éléments divers
-  
-### Notice d'utilisation
-- #### Déplacement de la carte :
-    - "image clic molette"    Maintenir enfoncé clic molette et déplacer la souris.
-    - "image clic droit"      Maintenir enfoncé clic droit et déplacer la souris.
+- Utiliser l'éditeur de texte de votre choix pour ouvrir le fichier index.html à la racine du dossier Aeos-Kit. (Bloc-notes, [Notepad++](https://notepad-plus-plus.org/downloads/), [Visual Studio Code](https://code.visualstudio.com/download), [Sublime Text](https://www.sublimetext.com/3), etc...)
+<img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/index-file.png" alt="Image Index" title="Image Index">
 
-- #### Zoom et dézoom :
-    - "image défilement haut" Défilement vertical haut avec le curseur de la souris sur la carte pour zoomer.
-    - "image défilement bas"  Défilement vertical bas avec le curseur de la souris sur la carte pour dézoomer.
+- #### Comment ajouter un Pokémon Jouable
+    - Récupérer l'image du Pokémon de votre choix, dans cet exemple on ajoutera Arceus. De préférence avec un fond transparent (format .png) et une longueur et largeur identiques.
+    - Enregistrer l'image dans le dossier Pokémon Jouables : Aeos-Kit/ressources/playable_pokemon/
+    - Trouver la section \<!-- PURPLE SIDE --> puis le rôle du nouveau Pokémon. Par exemple ici \<!-- ATTACKERS -->.<img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/section_purple_attacker.png" alt="Image Section Jouable" title="Image Section Jouable">
+    - Copier la section du dernier Pokémon (\<!-- CHANDELURE -->) et la coller à la ligne.<img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/copy_chandelure.png" alt="Image Copie Lugulabre" title="Image Copie Lugulabre">
+    - Modifier le titre et le nom de l'image. <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/arceus_section.png" alt="Image Modification Lugulabre" title="Image Modification Lugulabre">
+    - Enregistrer et fermer le fichier. Les modifications seront automatiquement ajoutées pour l'équipe orange.
 
-- #### Temps de jeu :
-    - <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/main/ressources/icons/timer.png" alt="Image Temps de Jeu" width="30px" height="30px" title="Image Temps de Jeu">
-        - "image défilement haut" Défilement vertical haut avec le curseur de la souris sur le temps pour augmenter le temps.
-        - "image défilement bas"  Défilement vertical bas avec le curseur de la souris sur le temps pour diminuer le temps.
-    - <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/main/ressources/icons/inc-timer.png" alt="Image Incrémenter Temps de Jeu" width="30px" height="30px" title="Image Incrémenter Temps de Jeu"> Clic gauche sur le + pour augmenter le temps.
-    - <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/main/ressources/icons/dec-timer.png" alt="Image Décrémenter Temps de Jeu" width="30px" height="30px" title="Image Décrémenter Temps de Jeu"> Clic gauche sur le - pour diminuer le temps.
-
-- #### Boîte à outils :
-    - <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/main/ressources/icons/reset_zoom.png" alt="Image Loupe Reset" width="30px" height="30px" title="Image Loupe Reset"> Réinitialise le zoom et la position de la carte.
-    - <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/main/ressources/icons/Pencil.png" alt="Image Crayon" width="30px" height="30px" title="Image Crayon"> Active/Désactive le mode dessin.
-        -   "image clic gauche"     Sur la carte, maintenir enfoncé clic gauche pour dessiner.
-    - <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/main/ressources/icons/color.png" alt="Image Couleur" width="30px" height="30px" title="Image Couleur"> Permet de changer la couleur du trait.
-    - <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/main/ressources/icons/dot-size.png" alt="Image Crayon" width="73px" height="46px" title="Image Crayon"> Permet de changer l'épaisseur du trait.
-    - <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/main/ressources/icons/font.png" alt="Image Écriture" width="30px" height="30px" title="Image Écriture"> Active/Désactive le mode écriture.
-    - <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/main/ressources/icons/circular-arrow.png" alt="Image Annuler" width="30px" height="30px" title="Image Annuler"> Permet d'annuler les dernières actions du dessin.
-    - <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/main/ressources/icons/circular-arrow.png" alt="Image Rétablir" width="30px" height="30px" title="Image Rétablir" style="transform: scaleX(-1)"> Permet de rétablir les actions annulées du dessin.
-    - <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/main/ressources/icons/eraser.png" alt="Image Gomme" width="30px" height="30px" title="Image Gomme"> Supprime tous les dessins.
-
-- #### Catégories d'éléments :
-    - "image clic gauche"             Clic gauche sur les flèches ▲ ► ▼ ◄ pour ouvrir/fermer les catégories.
-    - "image défilement haut et bas"  Utiliser le défilement horizontal pour voir les éléments cachés.
-    - "image survol"                  Survoler un élément pendant plus d'une seconde affiche son nom à l'écran.
-
-- #### Catégorie Pokémon jouables :
-    - Peut être déposé sur la carte.
-    - "image clic gauche enfoncé" Maintenir enfoncé clic gauche sur un élément et déplacer la souris pour le glisser.
-    - "image clic gauche relaché" Relâcher clic gauche sur un élément pour le déposer.
-        - Un élément relâché en dehors de la carte revient dans sa catégorie.
-    - "image clic droit"          Clic droit sur un élément déposé pour le ranger dans sa catégorie.
-
-- #### Catégorie Pokémon Neutres :
-    - Peut être déposé sur la carte.
-    - "image clic gauche enfoncé" Maintenir enfoncé clic gauche sur un élément et déplacer la souris pour le glisser.
-    - "image clic gauche relâché" Relâcher clic gauche sur un élément pour le déposer.
-        - Un élément relâché en dehors de la carte est supprimé.
-    - "image clic droit"          Clic droit sur un élément déposé pour le supprimer.
-
-- #### Catégorie Objets de combat et Objets tenus :
-    - Peut être déposé sur la carte.
-    - Peut être déposé sur un Pokémon jouable.
-    - Un seul Objet de combat peut être attaché à un Pokémon jouable.
-    - Trois Objets tenus peuvent être attachés à un Pokémon jouable.
-    - "image clic gauche enfoncé" Maintenir enfoncé clic gauche sur un élément et déplacer la souris pour le glisser.
-    - "image clic gauche relâché" Relâcher clic gauche sur un élément pour le déposer.
-        - Un élément relâché en dehors de la carte est supprimé.
-    - "image clic droit"  Clic droit sur un élément déposé sur la carte pour le supprimer.
-    - "image tous clics"  Clic gauche/droit/molette sur un élément déposé sur un Pokémon jouable pour le supprimer.
-
-- #### Objets divers :
-    - <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/main/ressources/bases/purple_base.png" alt="Image Base Violette Détruite" width="30px" height="30px" title="Image Base Violette Détruite"> Base de l'équipe violette détruite.
-    - <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/main/ressources/bases/orange_base.png" alt="Image Base Orange Détruite" width="30px" height="30px" title="Image Base Orange Détruite">   Base de l'équipe orange détruite.
-    - <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/main/ressources/bases/vortex.png" alt="Image Courant d'Air" width="30px" height="30px" title="Image Courant d'Air">   Courant d'air de Rayquaza.
+- #### Comment ajouter un Pokémon Neutre
+    - Récupérer l'image du Pokémon de votre choix, dans cet exemple on ajoutera Natu. De préférence avec un fond transparent (format .png) et une longueur et largeur identiques.
+        - Enregistrer l'image dans le dossier Pokémon Sauvages : Aeos-Kit/ressources/wild_pokemon/
+        - Trouver la section \<!-- NEUTRAL POKEMON -->. <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/section_neutral.png" alt="Image Section Sauvage" title="Image Section Sauvage">
+        - Copier la section du dernier Pokémon (\<!-- INDEEDEE -->) et la coller à la ligne.<img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/copy_indeedee.png" alt="Image Copie Wimessir" title="Image Copie Wimessir">
+        - Modifier le titre et le nom de l'image. <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/natu_section.png" alt="Image Modification Wimessir" title="Image Modification Wimessir">
+        - Enregistrer et fermer le fichier.
