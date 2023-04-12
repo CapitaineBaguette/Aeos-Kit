@@ -16,10 +16,8 @@
 		<div id="markers"></div>
 	</div>
 
+	<!-- TOP TOOLBAR -->
 	<div class="top-menu">
-		
-		
-		<!-- TOP TOOLBAR -->
 		<div class="btnholder">
 			<!-- TIMER -->
 			<div class="timer"  onmousewheel="wheelTime(event)">
@@ -59,7 +57,6 @@
 		<div></div>
 	</div>
 	
-
 	<!-- LINKS -->
 	<div class="links">
 		<div onclick="openHelp()">
@@ -273,7 +270,7 @@
 		<div id="orange-picks"></div>
 	</div>
 
-	<!-- BASES -->
+	<!-- MISCLLANEOUS -->
 	<div id="bottom-right-menu" class="menu bottom-right-menu">
 		<div onclick="toggleMenu(this, 'base-picks')" class="base-side close-menu"><p>▼</p><p class="menu-name closed">Miscellaneous</p></div>
 		<div id="base-picks">
@@ -286,13 +283,15 @@
 					<div class="draggable berry-mon" style="background-image: url('ressources/berries/sitrus_berry.png');"></div>
 					<div class="draggable berry-mon" style="background-image: url('ressources/berries/sailak_berry.png');"></div>
 					<div class="draggable berry-mon" style="background-image: url('ressources/berries/oran_berry.png');"></div>
+					<div class="draggable neutral-mon" style="background-image: url('ressources/bases/clone_left.png');"></div>
+					<div class="draggable neutral-mon" style="background-image: url('ressources/bases/clone_right.png');"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 
  	<!-- ITEMS -->
-  <div id="bottom-middle-menu" class="menu bottom-middle-menu">
+ 	<div id="bottom-middle-menu" class="menu bottom-middle-menu">
 		<div onclick="toggleMenu(this, 'items-picks')" class="item-side close-menu"><p>▼</p><p class="menu-name closed">Battle Items & Held Items</p></div>
 		<div id="items-picks" class="base-picks">
 			<div class="item-side category">
@@ -376,6 +375,7 @@
 		</div>
 	</div>
 
+	<!-- NOTICE -->
 	<div id="modal-help" class="modal closed lang-en">
 		<div class="modal-content">
 			<div class="modal-top">
