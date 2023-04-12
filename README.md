@@ -20,7 +20,7 @@ TO TRANSLATE
 - #### Comment ajouter un Pokémon Jouable
     - Récupérer l'image du Pokémon de votre choix, dans cet exemple on ajoutera Arceus. De préférence avec un fond transparent (format .png) et une longueur et largeur identiques.
     - Enregistrer l'image dans le dossier Pokémon Jouables : Aeos-Kit/ressources/playable_pokemon/
-    - Trouver la section \<!-- PURPLE SIDE --> puis le rôle du nouveau Pokémon. Par exemple ici \<!-- ATTACKERS -->.<img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/section_purple_attacker.png" alt="Image Section Jouable" title="Image Section Jouable">
+    - Trouver la section \<!-- PURPLE SIDE --> puis le rôle du nouveau Pokémon. Par exemple ici \<!-- ATTACKERS -->.<img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/section_purple.png" alt="Image Section Jouable" title="Image Section Jouable">
     - Copier la section du dernier Pokémon (\<!-- CHANDELURE -->) et la coller à la ligne.<img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/copy_chandelure.png" alt="Image Copie Lugulabre" title="Image Copie Lugulabre">
     - Modifier le titre et le nom de l'image. <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/arceus_section.png" alt="Image Modification Lugulabre" title="Image Modification Lugulabre">
     - Enregistrer et fermer le fichier. Les modifications seront automatiquement ajoutées pour l'équipe orange.
