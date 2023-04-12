@@ -1,13 +1,13 @@
 # Summary
 Website: [Aeos-Kit](https://capitainebaguette.github.io/Aeos-Kit/)
 <br>
-Download:  [Releases](https://github.com/CapitaineBaguette/Aeos-Kit/releases)
+Download Folder:  [Releases](https://github.com/CapitaineBaguette/Aeos-Kit/releases)
 <br>
 Sections:
 <br>
-\- [English](#section-anglaise)
+<img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/icons/flag_en.png" alt="English Flag" title="English Flag" width="25px"> [English](#section-anglaise)
 <br>
-\- [Français](#section-française)
+<img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/icons/flag_fr.png" alt="Drapeau Français" title="Drapeau Français" width="25px"> [Français](#section-française)
 
 ## English section <a name="section-anglaise"></a>
 ### Notice de modification
@@ -29,7 +29,7 @@ Sections:
 
 
 - #### Add Playable Pokémon <a name="section-en-jouable"></a>
-    - Get the image of the Pokémon of your choice, in this example we will add Arceus. Preferably with a transparent background (.png format) and equals length and width.
+    - Get the image of the Pokémon of your choice, in this example we will add Arceus to Attaker role. Preferably with a transparent background (.png format) and equals length and width.
     - Save the image in the Playable Pokémon folder: Aeos-Kit/ressources/playable_pokemon/
     <br><img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/folder_playable_pokemon.png" alt="Playable Folder Image" title="Playable Folder Image">
     - Find the \<!-- PURPLE SIDE --> section, then the role of the new Pokémon. For example, here it is \<!-- ATTACKERS -->.<img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/section_purple.png" alt="Playable Section Image" title="Playable Section Image">
@@ -98,7 +98,7 @@ Sections:
 
 
 - #### Ajouter un Pokémon Jouable <a name="section-fr-jouable"></a>
-    - Récupérer l'image du Pokémon de votre choix, dans cet exemple on ajoutera Arceus. De préférence avec un fond transparent (format .png) et une longueur et largeur identiques.
+    - Récupérer l'image du Pokémon de votre choix, dans cet exemple on ajoutera Arceus au rôle Attaquant. De préférence avec un fond transparent (format .png) et une longueur et largeur identiques.
     - Enregistrer l'image dans le dossier Pokémon Jouables : Aeos-Kit/ressources/playable_pokemon/
     <br><img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/folder_playable_pokemon.png" alt="Image Dossier Jouable" title="Image Dossier Jouable">
     - Trouver la section \<!-- PURPLE SIDE --> puis le rôle du nouveau Pokémon. Par exemple ici \<!-- ATTACKERS -->.<img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/notice/section_purple.png" alt="Image Section Jouable" title="Image Section Jouable">
