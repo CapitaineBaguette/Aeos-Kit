@@ -17,7 +17,8 @@ const drawingData = {
   size: 1,
   history: [],
   historyPosition: 0,
-  imgText: null ,
+  imgText: null,
+  elImgText: null,
   writingMode: false
 }
 
@@ -91,10 +92,12 @@ window.onload = () => {
 
   initHoverText();
   
-  initTextImg();
-  setDrawColor(ElDrawColor);
-  setDrawSize(ElDrawSize);
-  document.addEventListener("contextmenu", event => event.preventDefault());
+  initTextImg().then(() => {
+    setDrawColor(ElDrawColor);
+    setDrawSize(ElDrawSize);
+    document.addEventListener("contextmenu", event => event.preventDefault());
+  });
+  
 };
 
 function initHoverText() {
@@ -189,11 +192,26 @@ function setDrawColor(self) {
   setTextImg();
 }
 
-function initTextImg() {
-  ElCanvasText.width = ElTextImg.width;
-  ElCanvasText.height = ElTextImg.height;
-  CtxCanvasText.drawImage(ElTextImg, 0, 0, ElTextImg.width, ElTextImg.height);
-  drawingData.imgText = CtxCanvasText.getImageData(0, 0, ElCanvasText.width, ElCanvasText.height);
+async function initTextImg() {
+  ElCanvasText.width = ElTextImg.width.baseVal.value;
+  ElCanvasText.height = ElTextImg.height.baseVal.value;
+  const svgString = new XMLSerializer().serializeToString(ElTextImg);
+  const img = new Image();
+  return new Promise((resolve, reject) => {
+    img.onload = function() {
+      CtxCanvasText.drawImage(img, 0, 0); // Dessiner l'image sur le canvas
+      drawingData.imgText = CtxCanvasText.getImageData(0, 0, ElCanvasText.width, ElCanvasText.height);
+      
+      drawingData.elImgText = document.createElement("img");
+      drawingData.elImgText.src = ElCanvasText.toDataURL("image/png");
+
+      ElTextImg.parentNode.appendChild(drawingData.elImgText);
+      ElTextImg.remove();
+
+      resolve();
+    };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgString);
+  });
 }
 
 function setTextImg() {
@@ -206,7 +224,7 @@ function setTextImg() {
   }
 
   CtxCanvasText.putImageData(drawingData.imgText, 0, 0);
-  ElTextImg.src = ElCanvasText.toDataURL("image/png");
+  drawingData.elImgText.src = ElCanvasText.toDataURL("image/png");
 }
 
 function hexToRgb(hex) {
