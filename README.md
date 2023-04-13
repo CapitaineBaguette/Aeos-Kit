@@ -10,7 +10,7 @@ Sections:
 <img src="https://raw.githubusercontent.com/CapitaineBaguette/Aeos-Kit/v1.0-release/ressources/icons/flag_fr.png" alt="Drapeau Français" title="Drapeau Français" width="25px"> [Français](#section-française)
 
 ## English section <a name="section-anglaise"></a>
-### Notice de modification
+### Editing notice
 \- [Add Playable Pokémon](#section-en-jouable)
 <br>
 \- [Add Neutral Pokémon](#section-en-neutre)
